@@ -1,0 +1,6 @@
+@InmoWeb_HostAddress = http://localhost:5117
+
+GET {{InmoWeb_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,454 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "InmoWeb",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Auth": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLoginDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLoginDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLoginDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/{id}": {
+      "get": {
+        "tags": [
+          "Inmueble"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Crear Inmueble": {
+      "post": {
+        "tags": [
+          "Inmueble"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InmuebleCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InmuebleCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/InmuebleCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/InmuebleResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InmuebleResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InmuebleResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Inmueble/{id}": {
+      "put": {
+        "tags": [
+          "Inmueble"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InmuebleUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InmuebleUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/InmuebleUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/InmuebleResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InmuebleResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InmuebleResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Inmueble/publicaciones-activas": {
+      "get": {
+        "tags": [
+          "Inmueble"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "InmuebleCreateDto": {
+        "required": [
+          "codigo",
+          "titulo"
+        ],
+        "type": "object",
+        "properties": {
+          "codigo": {
+            "maxLength": 20,
+            "minLength": 0,
+            "type": "string"
+          },
+          "titulo": {
+            "maxLength": 150,
+            "minLength": 0,
+            "type": "string"
+          },
+          "descripcion": {
+            "maxLength": 2000,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "superficieTotal": {
+            "minimum": 0.01,
+            "type": "number",
+            "format": "double"
+          },
+          "superficieCubierta": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "ambientes": {
+            "maximum": 100,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "dormitorios": {
+            "maximum": 50,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "banios": {
+            "maximum": 50,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "cochera": {
+            "type": "boolean"
+          },
+          "idDireccion": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "idTipoInmueble": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "idEstadoInmueble": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "idInmobiliaria": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "InmuebleResponseDto": {
+        "type": "object",
+        "properties": {
+          "idInmueble": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "titulo": {
+            "type": "string",
+            "nullable": true
+          },
+          "descripcion": {
+            "type": "string",
+            "nullable": true
+          },
+          "superficieTotal": {
+            "type": "number",
+            "format": "double"
+          },
+          "superficieCubierta": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "ambientes": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "dormitorios": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "banios": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "cochera": {
+            "type": "boolean"
+          },
+          "idDireccion": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idTipoInmueble": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idEstadoInmueble": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idInmobiliaria": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "InmuebleUpdateDto": {
+        "required": [
+          "codigo",
+          "titulo"
+        ],
+        "type": "object",
+        "properties": {
+          "codigo": {
+            "maxLength": 20,
+            "minLength": 0,
+            "type": "string"
+          },
+          "titulo": {
+            "maxLength": 150,
+            "minLength": 0,
+            "type": "string"
+          },
+          "descripcion": {
+            "maxLength": 2000,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "superficieTotal": {
+            "minimum": 0.01,
+            "type": "number",
+            "format": "double"
+          },
+          "superficieCubierta": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "ambientes": {
+            "maximum": 100,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "dormitorios": {
+            "maximum": 50,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "banios": {
+            "maximum": 50,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "cochera": {
+            "type": "boolean"
+          },
+          "idDireccion": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "idTipoInmueble": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "idEstadoInmueble": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "idInmobiliaria": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserLoginDTO": {
+        "required": [
+          "apellido",
+          "dni"
+        ],
+        "type": "object",
+        "properties": {
+          "apellido": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "dni": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "Ingres� el JWT (sin el bearer).",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": [
+        ""
+      ]
+    }
+  ]
+}

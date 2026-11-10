@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inmobiliaria Córdoba</title>
+
+    <link rel="stylesheet" href="css/Estilos.css">
+</head>
+<body>
+
+    <header>
+        <h1>Inmobiliaria Córdoba</h1>
+
+        <nav>
+            <a href="Indice.html">Inicio</a>
+            <a href="#propiedades">Propiedades</a>
+            <a href="Contacto.html">Contacto</a>
+            <a href="Login.html">Iniciar sesión</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="portada">
+            <div class="contenido-portada">
+                <h2>Encontrá tu próxima propiedad</h2>
+                <p>Descubrí casas, departamentos y terrenos en Córdoba.</p>
+
+
+                <form class="buscador" id="formulario-busqueda">
+                    <input type="text"
+                           id="texto-busqueda"
+                           placeholder="¿Qué propiedad estás buscando?">
+
+                    <button type="submit">Buscar propiedades</button>
+                </form>
+
+            </div>
+        </section>
+
+
+        <section id="propiedades">
+            <h2>Propiedades disponibles</h2>
+
+            <div id="lista-inmuebles" class="contenedor-propiedades">
+
+                <article class="tarjeta-propiedad">
+                    <img src="imagenes/casa1.jpg" alt="Casa en Nueva Córdoba" class="imagen-propiedad">
+
+                    <div class="informacion-propiedad">
+                        <h3>Casa en Nueva Córdoba</h3>
+                        <p>Córdoba Capital</p>
+                        <p>3 dormitorios - 2 baños</p>
+                        <h4>USD 150.000</h4>
+                        <button type="button" onclick="verDetalles(0)">
+                            Ver detalles
+                        </button>
+                    </div>
+                </article>
+
+                <article class="tarjeta-propiedad">
+                    <img src="imagenes/dto1.jpg" alt="Departamento en General Paz" class="imagen-propiedad">
+
+                    <div class="informacion-propiedad">
+                        <h3>Departamento en General Paz</h3>
+                        <p>Córdoba Capital</p>
+                        <p>2 dormitorios - 1 baño</p>
+                        <h4>USD 95.000</h4>
+                        <button type="button" onclick="verDetalles(1)">
+                            Ver detalles
+                        </button>
+                    </div>
+                </article>
+
+                <article class="tarjeta-propiedad">
+                    <img src="imagenes/casa2.jpg" alt="Casa en Villa Allende" class="imagen-propiedad">
+
+                    <div class="informacion-propiedad">
+                        <h3>Casa en Villa Allende</h3>
+                        <p>Villa Allende, Córdoba</p>
+                        <p>4 dormitorios - 3 baños</p>
+                        <h4>USD 220.000</h4>
+                        <button type="button" onclick="verDetalles(2)">
+                            Ver detalles
+                        </button>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Inmobiliaria Córdoba</p>
+    </footer>
+
+    <script src="js/propiedades.js"></script>
+</body>
+</html>

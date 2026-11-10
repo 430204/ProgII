@@ -1,0 +1,55 @@
+﻿
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar sesión - Inmobiliaria Córdoba</title>
+    <link rel="stylesheet" href="css/Estilos.css">
+</head>
+<body>
+
+    <header>
+        <h1>Inmobiliaria Córdoba</h1>
+
+        <nav>
+            <a href="Indice.html">Inicio</a>
+            <a href="Indice.html#propiedades">Propiedades</a>
+            <a href="Login.html">Iniciar sesión</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="contenedor-login">
+            <h2>Iniciar sesión</h2>
+
+            <p>Ingresá tus datos para acceder al sistema.</p>
+
+            <form id="formulario-login">
+
+                <label for="apellido">Apellido</label>
+                <input type="text"
+                       id="apellido"
+                       placeholder="Ingresá tu apellido"
+                       required>
+
+                <label for="dni">DNI</label>
+                <input type="text"
+                       id="dni"
+                       placeholder="Ingresá tu DNI"
+                       inputmode="numeric"
+                       required>
+
+                <button type="submit">Ingresar</button>
+
+                <p id="mensaje-login" role="status" aria-live="polite"></p>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>Inmobiliaria Córdoba</p>
+    </footer>
+    <script src="js/login.js"></script>
+</body>
+</html>

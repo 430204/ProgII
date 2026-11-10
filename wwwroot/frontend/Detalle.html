@@ -1,0 +1,62 @@
+﻿
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de propiedad</title>
+    <link rel="stylesheet" href="css/Estilos.css">
+</head>
+<body>
+
+    <header>
+        <h1>Inmobiliaria Córdoba</h1>
+
+        <nav>
+            <a href="Indice.html">Inicio</a>
+            <a href="Indice.html#propiedades">Propiedades</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="detalle-propiedad">
+            <h2 id="nombre-propiedad">Detalle de propiedad</h2>
+
+            <img id="imagen-detalle" src="" alt="Imagen de la propiedad">
+
+            <h3 id="precio-propiedad"></h3>
+
+            <p id="ubicacion-propiedad"></p>
+            <p id="caracteristicas-propiedad"></p>
+
+
+            <div class="formulario-contacto">
+                <h3>Consultar por esta propiedad</h3>
+
+                <form id="formulario-contacto">
+                    <input type="text" id="nombre-contacto"
+                           placeholder="Tu nombre" required>
+
+                    <input type="email" id="email-contacto"
+                           placeholder="Tu correo electrónico" required>
+
+                    <textarea id="mensaje-contacto"
+                              placeholder="Escribí tu consulta"
+                              required></textarea>
+
+                    <button type="submit">Enviar consulta</button>
+                </form>
+            </div>
+
+            <a href="Indice.html">Volver a propiedades</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>Inmobiliaria Córdoba</p>
+    </footer>
+
+    <script src="js/detalle.js"></script>
+
+</body>
+</html>

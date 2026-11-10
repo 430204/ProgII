@@ -1,0 +1,376 @@
+﻿
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f6f8;
+    color: #222;
+}
+
+header {
+    background-color: #17324d;
+    color: white;
+    padding: 25px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    header h1 {
+        font-size: 25px;
+    }
+
+nav {
+    display: flex;
+    gap: 25px;
+}
+
+    nav a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+        nav a:hover {
+            color: #e9bc70;
+        }
+
+main {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+section {
+    margin-bottom: 50px;
+}
+
+    section h2 {
+        margin-bottom: 20px;
+    }
+
+footer {
+    background-color: #17324d;
+    color: white;
+    padding: 25px;
+    text-align: center;
+}
+
+@media (max-width: 650px) {
+    header {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+
+    nav {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+.portada {
+    background-color: #e3edf5;
+    padding: 80px 40px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.contenido-portada h2 {
+    font-size: 36px;
+    margin-bottom: 15px;
+}
+
+.contenido-portada p {
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.buscador {
+    display: flex;
+    gap: 10px;
+    max-width: 650px;
+    margin: auto;
+}
+
+    .buscador input {
+        flex: 1;
+        min-width: 0;
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 16px;
+    }
+
+    .buscador button {
+        background-color: #17324d;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 15px 25px;
+        cursor: pointer;
+    }
+
+        .buscador button:hover {
+            background-color: #285578;
+        }
+
+@media (max-width: 650px) {
+    .buscador {
+        flex-direction: column;
+    }
+
+    .portada {
+        padding: 50px 20px;
+    }
+
+    .contenido-portada h2 {
+        font-size: 28px;
+    }
+}
+
+.contenedor-propiedades {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.tarjeta-propiedad {
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.imagen-propiedad {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+}
+
+.informacion-propiedad {
+    padding: 20px;
+}
+
+    .informacion-propiedad h3 {
+        margin-bottom: 12px;
+    }
+
+    .informacion-propiedad p {
+        margin-bottom: 10px;
+        color: #666;
+    }
+
+    .informacion-propiedad h4 {
+        font-size: 22px;
+        color: #17324d;
+        margin: 15px 0;
+    }
+
+    .informacion-propiedad button {
+        background-color: #17324d;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        width: 100%;
+    }
+
+        .informacion-propiedad button:hover {
+            background-color: #285578;
+        }
+
+@media (max-width: 900px) {
+    .contenedor-propiedades {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .contenedor-propiedades {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Diseño de la página de detalles */
+
+.detalle-propiedad {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    max-width: 900px;
+    margin: 40px auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+#imagen-detalle {
+    width: 100%;
+    max-height: 450px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin: 20px 0;
+    display: block;
+}
+
+.detalle-propiedad h2 {
+    font-size: 30px;
+    color: #17324d;
+}
+
+.detalle-propiedad h3 {
+    font-size: 26px;
+    margin-bottom: 15px;
+}
+
+.detalle-propiedad p {
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+
+.formulario-contacto {
+    margin-top: 35px;
+    margin-bottom: 25px;
+    padding: 25px;
+    background-color: #f5f6f8;
+    border-radius: 10px;
+}
+
+    .formulario-contacto form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .formulario-contacto input,
+    .formulario-contacto textarea {
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+    }
+
+    .formulario-contacto textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    .formulario-contacto button {
+        padding: 14px;
+        background-color: #17324d;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+/* Pantalla de inicio de sesión */
+
+.contenedor-login {
+    background-color: white;
+    max-width: 450px;
+    margin: 60px auto;
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+    .contenedor-login h2 {
+        text-align: center;
+        color: #17324d;
+        margin-bottom: 15px;
+    }
+
+    .contenedor-login p {
+        text-align: center;
+        color: #666;
+        margin-bottom: 30px;
+    }
+
+#formulario-login {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+    #formulario-login label {
+        font-weight: bold;
+    }
+
+    #formulario-login input {
+        padding: 13px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 16px;
+    }
+
+    #formulario-login button {
+        background-color: #17324d;
+        color: white;
+        border: none;
+        padding: 14px;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+        #formulario-login button:hover {
+            background-color: #285578;
+        }
+
+/* Mensajes del login */
+
+#mensaje-login {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+    #mensaje-login.mensaje-error {
+        color: #b42318;
+        font-weight: bold;
+    }
+
+    #mensaje-login.mensaje-exito {
+        color: #16703c;
+        font-weight: bold;
+    }
+
+#formulario-contacto-general {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+    #formulario-contacto-general input,
+    #formulario-contacto-general textarea {
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+    }
+
+    #formulario-contacto-general button {
+        padding: 14px;
+        background-color: #17324d;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+        #formulario-contacto-general button:hover {
+            background-color: #285578;
+        }
+
+
+
+

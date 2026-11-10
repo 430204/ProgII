@@ -1,0 +1,48 @@
+﻿
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - Inmobiliaria Córdoba</title>
+    <link rel="stylesheet" href="css/Estilos.css">
+</head>
+<body>
+
+    <header>
+        <h1>Inmobiliaria Córdoba</h1>
+
+        <nav>
+            <a href="Indice.html">Inicio</a>
+            <a href="Indice.html#propiedades">Propiedades</a>
+            <a href="Contacto.html">Contacto</a>
+            <a href="Login.html">Iniciar sesión</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="contenedor-login">
+            <h2>Contactanos</h2>
+            <p>Dejanos tu consulta y nos comunicaremos con vos.</p>
+
+            <form id="formulario-contacto-general">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" required>
+
+                <label for="correo">Correo electrónico</label>
+                <input type="email" id="correo" required>
+
+                <label for="consulta">Consulta</label>
+                <textarea id="consulta" rows="5" required></textarea>
+
+                <button type="submit">Enviar consulta</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>Inmobiliaria Córdoba</p>
+    </footer>
+    <script src="js/contacto.js"></script>
+</body>
+</html>

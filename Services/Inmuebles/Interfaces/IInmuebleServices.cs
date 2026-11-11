@@ -18,6 +18,9 @@ namespace InmoWeb.Services.Inmuebles.Interfaces
         Task<InmuebleResponseDto> CreateAsync(InmuebleCreateDto dto);
         Task<InmuebleResponseDto?> UpdateAsync(int id, InmuebleUpdateDto dto);
 
-        Task<List<VwPublicacionesActiva>>? GetPublicacionesActivas();
+        Task<List<VwPublicacionesActiva>> GetPublicacionesActivas(
+        string? operacion,
+        string? moneda,
+        decimal? precioMaximo);
     }
 }

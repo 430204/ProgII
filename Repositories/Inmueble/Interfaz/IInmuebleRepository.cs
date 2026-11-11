@@ -22,8 +22,11 @@ namespace InmoWeb.Repositories.Inmueble.Interfaz
 
         Task<int> SaveChangesAsync();
 
-        Task<List<VwPublicacionesActiva>>? GetPublicacionesActivas();
+        Task<List<VwPublicacionesActiva>> GetPublicacionesActivas(
+        string? operacion,
+        string? moneda,
+        decimal? precioMaximo);
 
-        
+
     }
 }

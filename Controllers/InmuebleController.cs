@@ -80,11 +80,22 @@ namespace InmoWeb.Controllers
         }
 
         [HttpGet("publicaciones-activas")]
-        public async Task<IActionResult> GetPublicacionesActivas()
+        public async Task<IActionResult> GetPublicacionesActivas(
+        [FromQuery] string? operacion = null,
+        [FromQuery] string? moneda = null,
+        [FromQuery] decimal? precioMaximo = null)
         {
-            var publicaciones = await service.GetPublicacionesActivas();
+            try
+            {
+                var publicaciones = await service.GetPublicacionesActivas(
+                    operacion, moneda, precioMaximo);
 
-            return Ok(publicaciones);
+                return Ok(publicaciones);
+            }
+            catch (BusinesException ex)
+            {
+                return BadRequest(new { mensaje = ex.Message });
+            }
         }
 
     }

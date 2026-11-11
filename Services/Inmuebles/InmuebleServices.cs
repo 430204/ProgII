@@ -50,9 +50,41 @@ namespace InmoWeb.Services.Inmuebles
             return await repo.GetInmueblesInactivos();
         }
 
-        public async Task<List<VwPublicacionesActiva>>? GetPublicacionesActivas()
+        public async Task<List<VwPublicacionesActiva>> GetPublicacionesActivas(
+        string? operacion,
+        string? moneda,
+        decimal? precioMaximo)
         {
-            return await repo.GetPublicacionesActivas();
+            if (precioMaximo.HasValue)
+            {
+                if (precioMaximo.Value <= 0)
+                {
+                    throw new BusinesException(
+                        "El precio máximo debe ser mayor que cero.");
+                }
+
+                if (string.IsNullOrWhiteSpace(moneda))
+                {
+                    throw new BusinesException(
+                        "Seleccioná una moneda para filtrar por precio.");
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(moneda)
+                && moneda != "ARS" && moneda != "USD")
+            {
+                throw new BusinesException("La moneda debe ser ARS o USD.");
+            }
+
+            if (!string.IsNullOrWhiteSpace(operacion)
+                && operacion != "Venta" && operacion != "Alquiler")
+            {
+                throw new BusinesException(
+                    "La operación debe ser Venta o Alquiler.");
+            }
+
+            return await repo.GetPublicacionesActivas(
+                operacion, moneda, precioMaximo);
         }
 
         public async Task<InmuebleResponseDto?> UpdateAsync(int id, InmuebleUpdateDto dto)

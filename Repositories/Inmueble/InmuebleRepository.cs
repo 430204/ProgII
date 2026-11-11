@@ -62,10 +62,31 @@ namespace InmoWeb.Repositories.Inmueble
             return await db.Inmuebles.Include(i => i.IdEstadoInmueble).Where(i => i.IdEstadoInmueble == 2).ToListAsync();
         }
 
-        public async Task<List<VwPublicacionesActiva>> GetPublicacionesActivas()
+        public async Task<List<VwPublicacionesActiva>> GetPublicacionesActivas(
+        string? operacion,
+        string? moneda,
+        decimal? precioMaximo)
         {
-            return await db.VwPublicacionesActivas
-                .AsNoTracking()
+            var consulta = db.VwPublicacionesActivas.AsNoTracking();
+
+            if (!string.IsNullOrWhiteSpace(operacion))
+            {
+                consulta = consulta.Where(p => p.Operacion == operacion);
+            }
+
+            if (!string.IsNullOrWhiteSpace(moneda))
+            {
+                consulta = consulta.Where(p => p.Moneda == moneda);
+            }
+
+            if (precioMaximo.HasValue)
+            {
+                consulta = consulta.Where(p => p.Precio <= precioMaximo.Value);
+            }
+
+            return await consulta
+                .OrderBy(p => p.Moneda)
+                .ThenBy(p => p.Precio)
                 .ToListAsync();
         }
 

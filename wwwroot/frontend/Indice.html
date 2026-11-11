@@ -26,75 +26,77 @@
                 <h2>Encontrá tu próxima propiedad</h2>
                 <p>Descubrí casas, departamentos y terrenos en Córdoba.</p>
 
-
                 <form class="buscador" id="formulario-busqueda">
-                    <input type="text"
-                           id="texto-busqueda"
-                           placeholder="¿Qué propiedad estás buscando?">
+                    <div>
+                        <label for="texto-busqueda">Buscar por texto</label>
+                        <input type="text"
+                               id="texto-busqueda"
+                               placeholder="Título, ciudad o tipo">
+                    </div>
+
+                    <div>
+                        <label for="operacion">Operación</label>
+                        <select id="operacion">
+                            <option value="">Todas</option>
+                            <option value="Venta">Venta</option>
+                            <option value="Alquiler">Alquiler</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="moneda">Moneda</label>
+                        <select id="moneda">
+                            <option value="">Todas</option>
+                            <option value="ARS">Pesos argentinos</option>
+                            <option value="USD">Dólares</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="precio-maximo">Precio máximo</label>
+                        <input type="number"
+                               id="precio-maximo"
+                               min="0.01"
+                               step="0.01"
+                               placeholder="Sin límite">
+                    </div>
 
                     <button type="submit">Buscar propiedades</button>
                 </form>
-
             </div>
         </section>
-
 
         <section id="propiedades">
             <h2>Propiedades disponibles</h2>
 
-            <div id="lista-inmuebles" class="contenedor-propiedades">
+            <div id="lista-inmuebles" class="contenedor-propiedades"></div>
 
-                <article class="tarjeta-propiedad">
-                    <img src="imagenes/casa1.jpg" alt="Casa en Nueva Córdoba" class="imagen-propiedad">
+            <h3>Resultados de la búsqueda</h3>
+            <p id="cantidad-resultados" aria-live="polite"></p>
 
-                    <div class="informacion-propiedad">
-                        <h3>Casa en Nueva Córdoba</h3>
-                        <p>Córdoba Capital</p>
-                        <p>3 dormitorios - 2 baños</p>
-                        <h4>USD 150.000</h4>
-                        <button type="button" onclick="verDetalles(0)">
-                            Ver detalles
-                        </button>
-                    </div>
-                </article>
-
-                <article class="tarjeta-propiedad">
-                    <img src="imagenes/dto1.jpg" alt="Departamento en General Paz" class="imagen-propiedad">
-
-                    <div class="informacion-propiedad">
-                        <h3>Departamento en General Paz</h3>
-                        <p>Córdoba Capital</p>
-                        <p>2 dormitorios - 1 baño</p>
-                        <h4>USD 95.000</h4>
-                        <button type="button" onclick="verDetalles(1)">
-                            Ver detalles
-                        </button>
-                    </div>
-                </article>
-
-                <article class="tarjeta-propiedad">
-                    <img src="imagenes/casa2.jpg" alt="Casa en Villa Allende" class="imagen-propiedad">
-
-                    <div class="informacion-propiedad">
-                        <h3>Casa en Villa Allende</h3>
-                        <p>Villa Allende, Córdoba</p>
-                        <p>4 dormitorios - 3 baños</p>
-                        <h4>USD 220.000</h4>
-                        <button type="button" onclick="verDetalles(2)">
-                            Ver detalles
-                        </button>
-                    </div>
-                </article>
-
+            <div class="contenedor-tabla">
+                <table class="tabla-resultados">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Propiedad</th>
+                            <th>Tipo</th>
+                            <th>Ciudad</th>
+                            <th>Operación</th>
+                            <th>Moneda</th>
+                            <th>Precio</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpo-resultados"></tbody>
+                </table>
             </div>
         </section>
-
     </main>
 
     <footer>
         <p>Inmobiliaria Córdoba</p>
     </footer>
 
-    <script src="js/propiedades.js"></script>
+    <script src="js/Propiedades.js"></script>
 </body>
 </html>

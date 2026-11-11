@@ -371,6 +371,80 @@ footer {
             background-color: #285578;
         }
 
+#formulario-busqueda {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 12px;
+}
 
+    #formulario-busqueda > div {
+        flex: 1 1 160px;
+        min-width: 0;
+        text-align: left;
+    }
 
+    #formulario-busqueda label {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 14px;
+    }
 
+    #formulario-busqueda input,
+    #formulario-busqueda select {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: white;
+    }
+
+    #formulario-busqueda button {
+        min-height: 42px;
+    }
+
+.contenedor-tabla {
+    overflow-x: auto;
+    margin-bottom: 30px;
+}
+
+.tabla-resultados {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    font-size: 15px;
+}
+
+    .tabla-resultados th,
+    .tabla-resultados td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .tabla-resultados th {
+        background-color: #19354d;
+        color: white;
+    }
+
+    .tabla-resultados tbody tr:nth-child(even) {
+        background-color: #eef3f7;
+    }
+
+    .tabla-resultados th:last-child,
+    .tabla-resultados td:last-child {
+        text-align: right;
+        white-space: nowrap;
+    }
+
+#propiedades > h3 {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+#cantidad-resultados {
+    margin-bottom: 12px;
+    font-size: 16px;
+}

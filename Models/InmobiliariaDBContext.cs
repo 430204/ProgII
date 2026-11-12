@@ -130,7 +130,13 @@ public partial class InmobiliariaDBContext : DbContext
         {
             entity.HasKey(e => e.IdDetalleFactura).HasName("pk_id_detalle_factura");
 
-            entity.ToTable("DetalleFactura", tb => tb.HasTrigger("tr_DetalleFactura_CalcularSubtotal"));
+
+            entity.ToTable("DetalleFactura", tb =>
+            {
+                tb.HasTrigger("tr_DetalleFactura_CalcularSubtotal");
+                tb.UseSqlOutputClause(false);
+            });
+
 
             entity.Property(e => e.IdDetalleFactura).HasColumnName("id_detalle_factura");
             entity.Property(e => e.Cantidad).HasColumnName("cantidad");

@@ -881,3 +881,168 @@ footer {
     .op-grilla { grid-template-columns: 1fr; }
     .op-fila { grid-template-columns: 1fr; }
 }
+
+/* GESTION DE DETALLES DE FACTURAS */
+
+.gestion-facturas {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 25px;
+}
+
+    .gestion-facturas h2 {
+        color: #17324d;
+        margin-bottom: 10px;
+    }
+
+    .gestion-facturas h3 {
+        margin-top: 35px;
+        color: #17324d;
+    }
+
+#formulario-detalle {
+    background-color: white;
+    padding: 30px;
+    margin-top: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.campos-factura {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+    .campos-factura div {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .campos-factura label {
+        font-weight: bold;
+        color: #17324d;
+    }
+
+    .campos-factura input,
+    .campos-factura select {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+
+.subtotal-factura {
+    margin-top: 25px;
+    font-size: 20px;
+    color: #17324d;
+}
+
+#guardar-detalle,
+#cancelar-edicion {
+    padding: 13px 22px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+#guardar-detalle {
+    background-color: #17324d;
+    color: white;
+}
+
+    #guardar-detalle:hover {
+        background-color: #285578;
+    }
+
+#cancelar-edicion {
+    background-color: #e4e7eb;
+    color: #333;
+}
+
+.tabla-facturas {
+    overflow-x: auto;
+    background-color: white;
+    border-radius: 10px;
+    margin-top: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+    .tabla-facturas table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .tabla-facturas th {
+        background-color: #17324d;
+        color: white;
+        padding: 14px;
+        text-align: left;
+    }
+
+    .tabla-facturas td {
+        padding: 14px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .tabla-facturas tr:hover {
+        background-color: #f1f5f9;
+    }
+
+#mensaje-detalle {
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+@media (max-width: 700px) {
+    .campos-factura {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* BOTONES DE LA TABLA DE FACTURAS */
+
+.btn-editar,
+.btn-eliminar {
+    padding: 9px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-right: 8px;
+    transition: background-color 0.2s ease;
+}
+
+/* Editar */
+.btn-editar {
+    background-color: #17324d;
+    color: white;
+}
+
+    .btn-editar:hover {
+        background-color: #285578;
+    }
+
+/* Eliminar */
+.btn-eliminar {
+    background-color: #dc3545;
+    color: white;
+}
+
+    .btn-eliminar:hover {
+        background-color: #b02a37;
+    }
+
+    /* Botones deshabilitados */
+    .btn-editar:disabled,
+    .btn-eliminar:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+

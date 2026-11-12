@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -18,6 +19,7 @@
             <a href="#gestion">Gestión</a>
             <a href="Inmobiliarias.html">Inmobiliarias</a>
             <a href="Operaciones.html">Operaciones</a>
+            <a href="DetalleFactura.html">Facturación</a>
             <a href="Reportes.html">Reportes</a>
             <a href="Contacto.html">Contacto</a>
             <a href="Login.html">Iniciar sesión</a>
@@ -100,8 +102,10 @@
             <div class="crud-encabezado">
                 <div>
                     <h2>Gestión de propiedades</h2>
-                    <p>Alta, edición y baja del inventario. Las propiedades nuevas se cargan como
-                       <strong>Disponibles</strong>; al editarlas se las pasa a vendidas, alquiladas o reservadas.</p>
+                    <p>
+                        Alta, edición y baja del inventario. Las propiedades nuevas se cargan como
+                        <strong>Disponibles</strong>; al editarlas se las pasa a vendidas, alquiladas o reservadas.
+                    </p>
                 </div>
                 <button type="button" id="boton-nueva-inactiva" class="crud-btn crud-btn-primario">+ Nueva propiedad</button>
             </div>
@@ -147,35 +151,61 @@
 
                 <form id="formulario-inmueble">
                     <div class="crud-grilla">
-                        <div class="crud-campo"><label for="inm-codigo">Código</label>
-                            <input type="text" id="inm-codigo" maxlength="20" required></div>
-                        <div class="crud-campo"><label for="inm-titulo">Título</label>
-                            <input type="text" id="inm-titulo" maxlength="150" required></div>
-                        <div class="crud-campo"><label for="inm-tipo">Tipo de inmueble</label>
-                            <select id="inm-tipo" required></select></div>
-                        <div class="crud-campo"><label for="inm-estado">Estado</label>
+                        <div class="crud-campo">
+                            <label for="inm-codigo">Código</label>
+                            <input type="text" id="inm-codigo" maxlength="20" required>
+                        </div>
+                        <div class="crud-campo">
+                            <label for="inm-titulo">Título</label>
+                            <input type="text" id="inm-titulo" maxlength="150" required>
+                        </div>
+                        <div class="crud-campo">
+                            <label for="inm-tipo">Tipo de inmueble</label>
+                            <select id="inm-tipo" required></select>
+                        </div>
+                        <div class="crud-campo">
+                            <label for="inm-estado">Estado</label>
                             <select id="inm-estado" required></select>
-                            <small id="ayuda-estado" class="crud-ayuda"></small></div>
-                        <div class="crud-campo"><label for="inm-direccion">Dirección</label>
-                            <select id="inm-direccion" required></select></div>
-                        <div class="crud-campo"><label for="inm-inmobiliaria">Inmobiliaria</label>
-                            <select id="inm-inmobiliaria" required></select></div>
-                        <div class="crud-campo"><label for="inm-sup-total">Superficie total (m²)</label>
-                            <input type="number" id="inm-sup-total" min="0.01" step="0.01" required></div>
-                        <div class="crud-campo"><label for="inm-sup-cubierta">Superficie cubierta (m²)</label>
-                            <input type="number" id="inm-sup-cubierta" min="0" step="0.01"></div>
-                        <div class="crud-campo"><label for="inm-ambientes">Ambientes</label>
-                            <input type="number" id="inm-ambientes" min="0" max="100"></div>
-                        <div class="crud-campo"><label for="inm-dormitorios">Dormitorios</label>
-                            <input type="number" id="inm-dormitorios" min="0" max="50"></div>
-                        <div class="crud-campo"><label for="inm-banios">Baños</label>
-                            <input type="number" id="inm-banios" min="0" max="50"></div>
+                            <small id="ayuda-estado" class="crud-ayuda"></small>
+                        </div>
+                        <div class="crud-campo">
+                            <label for="inm-direccion">Dirección</label>
+                            <select id="inm-direccion" required></select>
+                        </div>
+                        <div class="crud-campo">
+                            <label for="inm-inmobiliaria">Inmobiliaria</label>
+                            <select id="inm-inmobiliaria" required></select>
+                        </div>
+                        <div class="crud-campo">
+                            <label for="inm-sup-total">Superficie total (m²)</label>
+                            <input type="number" id="inm-sup-total" min="0.01" step="0.01" required>
+                        </div>
+                        <div class="crud-campo">
+                            <label for="inm-sup-cubierta">Superficie cubierta (m²)</label>
+                            <input type="number" id="inm-sup-cubierta" min="0" step="0.01">
+                        </div>
+                        <div class="crud-campo">
+                            <label for="inm-ambientes">Ambientes</label>
+                            <input type="number" id="inm-ambientes" min="0" max="100">
+                        </div>
+                        <div class="crud-campo">
+                            <label for="inm-dormitorios">Dormitorios</label>
+                            <input type="number" id="inm-dormitorios" min="0" max="50">
+                        </div>
+                        <div class="crud-campo">
+                            <label for="inm-banios">Baños</label>
+                            <input type="number" id="inm-banios" min="0" max="50">
+                        </div>
                         <div class="crud-campo crud-check">
                             <input type="checkbox" id="inm-cochera">
-                            <label for="inm-cochera">Tiene cochera</label></div>
-                        <div class="crud-campo crud-ancho"><label for="inm-descripcion">Descripción (máx. 500 caracteres)</label>
-                            <textarea id="inm-descripcion" rows="3" maxlength="500"></textarea></div>
+                            <label for="inm-cochera">Tiene cochera</label>
+                        </div>
+                        <div class="crud-campo crud-ancho">
+                            <label for="inm-descripcion">Descripción (máx. 500 caracteres)</label>
+                            <textarea id="inm-descripcion" rows="3" maxlength="500"></textarea>
+                        </div>
                     </div>
+
                     <div class="crud-acciones">
                         <button type="button" id="boton-cancelar-inmueble" class="crud-btn">Cancelar</button>
                         <button type="submit" id="boton-guardar-inmueble" class="crud-btn crud-btn-primario">Guardar</button>

@@ -23,12 +23,14 @@ namespace InmoWeb.Services.Inmuebles.Interfaces
         string? moneda,
         decimal? precioMaximo);
 
-        // ---- CRUD de inmuebles inactivos ----
-        Task<List<InmuebleInactivoListDto>> GetInactivosAsync(string? texto, int? idEstado);
-        Task<InmuebleResponseDto?> GetInactivoByIdAsync(int id);
-        Task<InmuebleResponseDto> CreateInactivoAsync(InmuebleCreateDto dto);
-        Task<InmuebleResponseDto?> UpdateInactivoAsync(int id, InmuebleUpdateDto dto);
-        Task<bool> DeleteInactivoAsync(int id);
+        // ---- ABM de propiedades ----
+        // Alta: la propiedad nace Disponible.
+        // Edicion: es la operacion que la pasa a Vendido, Alquilado o Reservado.
+        Task<List<InmuebleListaDto>> GetPropiedadesAsync(string? texto, int? idEstado);
+        Task<InmuebleResponseDto?> GetPropiedadByIdAsync(int id);
+        Task<InmuebleResponseDto> CreatePropiedadAsync(InmuebleCreateDto dto);
+        Task<InmuebleResponseDto?> UpdatePropiedadAsync(int id, InmuebleUpdateDto dto);
+        Task<bool> DeletePropiedadAsync(int id);
         Task<CatalogosInmuebleDto> GetCatalogosAsync();
     }
 }

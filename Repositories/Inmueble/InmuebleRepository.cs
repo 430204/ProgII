@@ -91,10 +91,11 @@ namespace InmoWeb.Repositories.Inmueble
         }
 
 
-        public async Task<List<InmuebleInactivoListDto>> GetInactivosListadoAsync(string? texto, int? idEstado)
+        public async Task<List<InmuebleListaDto>> GetPropiedadesListadoAsync(string? texto, int? idEstado)
         {
-            // Inactivo = cualquier estado distinto de Disponible (id 1)
-            var consulta = db.Inmuebles.AsNoTracking().Where(i => i.IdEstadoInmueble != 1);
+            // El listado muestra TODAS las propiedades. Si no mostrara las Disponibles,
+            // una propiedad recien dada de alta desapareceria de la tabla.
+            var consulta = db.Inmuebles.AsNoTracking();
 
             if (idEstado.HasValue)
             {
@@ -112,7 +113,7 @@ namespace InmoWeb.Repositories.Inmueble
 
             return await consulta
                 .OrderBy(i => i.Codigo)
-                .Select(i => new InmuebleInactivoListDto
+                .Select(i => new InmuebleListaDto
                 {
                     IdInmueble = i.IdInmueble,
                     Codigo = i.Codigo,
@@ -155,10 +156,11 @@ namespace InmoWeb.Repositories.Inmueble
                 .ToListAsync();
 
             var estados = await db.EstadoInmuebles.AsNoTracking()
-                .Where(e => e.IdEstadoInmueble != 1)
                 .OrderBy(e => e.IdEstadoInmueble)
                 .Select(e => new OpcionDto { Id = e.IdEstadoInmueble, Texto = e.Descripcion })
                 .ToListAsync();
+
+            var idDisponible = await GetIdEstadoDisponibleAsync();
 
             var direcciones = await db.Direccions.AsNoTracking()
                 .OrderBy(d => d.IdCiudadNavigation.Nombre).ThenBy(d => d.Calle)
@@ -173,7 +175,9 @@ namespace InmoWeb.Repositories.Inmueble
             return new CatalogosInmuebleDto
             {
                 Tipos = tipos,
-                EstadosInactivos = estados,
+                Estados = estados,
+                EstadosInactivos = estados.Where(e => e.Id != idDisponible).ToList(),
+                EstadoDisponibleId = idDisponible,
                 Direcciones = direcciones
                     .Select(d => new OpcionDto
                     {
@@ -183,6 +187,42 @@ namespace InmoWeb.Repositories.Inmueble
                     .ToList(),
                 Inmobiliarias = inmobiliarias
             };
+        }
+
+        public async Task<int> GetIdEstadoDisponibleAsync()
+        {
+            var id = await db.EstadoInmuebles.AsNoTracking()
+                .Where(e => e.Descripcion == "Disponible")
+                .Select(e => e.IdEstadoInmueble)
+                .FirstOrDefaultAsync();
+
+            // Si por algun motivo no estuviera cargado, cae al id del script de creacion
+            return id == 0 ? 1 : id;
+        }
+
+        public async Task<int> DarDeBajaPublicacionesActivasAsync(int idInmueble)
+        {
+            // Se usa el stored procedure sp_DarDeBajaPublicacion para no duplicar
+            // en C# la regla que ya vive en la base de datos.
+            var idsPublicaciones = await db.Publicacions.AsNoTracking()
+                .Where(p => p.IdInmueble == idInmueble && p.Activa)
+                .Select(p => p.IdPublicacion)
+                .ToListAsync();
+
+            if (idsPublicaciones.Count == 0)
+            {
+                return 0;
+            }
+
+            await using var tx = await db.Database.BeginTransactionAsync();
+
+            foreach (var idPublicacion in idsPublicaciones)
+            {
+                await db.Procedures.sp_DarDeBajaPublicacionAsync(idPublicacion);
+            }
+
+            await tx.CommitAsync();
+            return idsPublicaciones.Count;
         }
 
 

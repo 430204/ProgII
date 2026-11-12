@@ -15,7 +15,10 @@
         <nav>
             <a href="Indice.html">Inicio</a>
             <a href="#propiedades">Propiedades</a>
-            <a href="#inactivas">Propiedades inactivas</a>
+            <a href="#gestion">Gestión</a>
+            <a href="Inmobiliarias.html">Inmobiliarias</a>
+            <a href="Operaciones.html">Operaciones</a>
+            <a href="Reportes.html">Reportes</a>
             <a href="Contacto.html">Contacto</a>
             <a href="Login.html">Iniciar sesión</a>
         </nav>
@@ -93,11 +96,12 @@
             </div>
         </section>
 
-        <section id="inactivas">
+        <section id="gestion">
             <div class="crud-encabezado">
                 <div>
-                    <h2>Propiedades inactivas</h2>
-                    <p>Gestión de inmuebles que no están disponibles: vendidos, alquilados o reservados.</p>
+                    <h2>Gestión de propiedades</h2>
+                    <p>Alta, edición y baja del inventario. Las propiedades nuevas se cargan como
+                       <strong>Disponibles</strong>; al editarlas se las pasa a vendidas, alquiladas o reservadas.</p>
                 </div>
                 <button type="button" id="boton-nueva-inactiva" class="crud-btn crud-btn-primario">+ Nueva propiedad</button>
             </div>
@@ -138,7 +142,7 @@
             </div>
 
             <dialog id="dialogo-inmueble" class="crud-dialogo">
-                <h3 id="titulo-dialogo-inmueble">Nueva propiedad inactiva</h3>
+                <h3 id="titulo-dialogo-inmueble">Nueva propiedad</h3>
                 <p id="mensaje-dialogo" class="crud-mensaje error" role="alert" hidden></p>
 
                 <form id="formulario-inmueble">
@@ -150,7 +154,8 @@
                         <div class="crud-campo"><label for="inm-tipo">Tipo de inmueble</label>
                             <select id="inm-tipo" required></select></div>
                         <div class="crud-campo"><label for="inm-estado">Estado</label>
-                            <select id="inm-estado" required></select></div>
+                            <select id="inm-estado" required></select>
+                            <small id="ayuda-estado" class="crud-ayuda"></small></div>
                         <div class="crud-campo"><label for="inm-direccion">Dirección</label>
                             <select id="inm-direccion" required></select></div>
                         <div class="crud-campo"><label for="inm-inmobiliaria">Inmobiliaria</label>

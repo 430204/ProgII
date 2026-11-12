@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inmobiliarias - Inmobiliaria Córdoba</title>
+    <link rel="stylesheet" href="css/Estilos.css">
+</head>
+<body>
+
+    <header>
+        <h1>Inmobiliaria Córdoba</h1>
+
+        <nav>
+            <a href="Indice.html">Inicio</a>
+            <a href="Indice.html#propiedades">Propiedades</a>
+            <a href="Inmobiliarias.html">Inmobiliarias</a>
+            <a href="Operaciones.html">Operaciones</a>
+            <a href="Reportes.html">Reportes</a>
+            <a href="Contacto.html">Contacto</a>
+            <a href="Login.html">Iniciar sesión</a>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Inmobiliarias</h2>
+            <p class="rep-intro">
+                Las inmobiliarias que operan en el portal, con el estado de su cartera.
+                Los números se calculan sobre las propiedades y publicaciones cargadas,
+                y se actualizan solos cuando se concreta una operación.
+            </p>
+
+            <p class="crud-mensaje" id="mensaje-inmobiliarias" role="status" aria-live="polite" hidden></p>
+
+            <div class="rep-totales" id="totales-inmobiliarias"></div>
+
+            <div class="inmo-grilla" id="grilla-inmobiliarias"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Inmobiliaria Córdoba</p>
+    </footer>
+
+    <script src="js/inmobiliarias.js"></script>
+</body>
+</html>

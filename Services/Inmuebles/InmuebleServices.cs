@@ -8,9 +8,6 @@ namespace InmoWeb.Services.Inmuebles
 {
     public class InmuebleServices : IInmuebleServices
     {
-        // Un inmueble "activo" es el que esta Disponible; cualquier otro estado es "inactivo"
-        private const int EstadoDisponible = 1;
-
         private readonly IInmuebleRepository repo;
 
         public InmuebleServices(IInmuebleRepository repo)
@@ -104,45 +101,57 @@ namespace InmoWeb.Services.Inmuebles
 
     
 
-        // ================= CRUD de inmuebles inactivos =================
+        // ================= ABM de propiedades =================
+        // Ciclo de vida: el alta crea la propiedad Disponible, la edicion es la
+        // que la pasa a Vendido, Alquilado o Reservado.
 
-        public async Task<List<InmuebleInactivoListDto>> GetInactivosAsync(string? texto, int? idEstado)
+        public async Task<List<InmuebleListaDto>> GetPropiedadesAsync(string? texto, int? idEstado)
         {
-            if (idEstado == EstadoDisponible)
-                throw new BusinesException("El estado Disponible no corresponde a un inmueble inactivo.");
-
-            return await repo.GetInactivosListadoAsync(texto, idEstado);
+            return await repo.GetPropiedadesListadoAsync(texto, idEstado);
         }
 
-        public async Task<InmuebleResponseDto?> GetInactivoByIdAsync(int id)
+        public async Task<InmuebleResponseDto?> GetPropiedadByIdAsync(int id)
         {
             var inmueble = await repo.GetInmuebleById(id);
-            if (inmueble is null || inmueble.IdEstadoInmueble == EstadoDisponible)
-                return null;
-
-            return MapToResponse(inmueble);
+            return inmueble is null ? null : MapToResponse(inmueble);
         }
 
-        public async Task<InmuebleResponseDto> CreateInactivoAsync(InmuebleCreateDto dto)
+        public async Task<InmuebleResponseDto> CreatePropiedadAsync(InmuebleCreateDto dto)
         {
-            ExigirEstadoInactivo(dto);
+            // Una propiedad nueva siempre nace Disponible: no tendria sentido dar de
+            // alta algo que ya esta vendido. El estado que venga del cliente se ignora.
+            dto.IdEstadoInmueble = await repo.GetIdEstadoDisponibleAsync();
+
             return await CreateAsync(dto);
         }
 
-        public async Task<InmuebleResponseDto?> UpdateInactivoAsync(int id, InmuebleUpdateDto dto)
+        public async Task<InmuebleResponseDto?> UpdatePropiedadAsync(int id, InmuebleUpdateDto dto)
         {
             var actual = await repo.GetInmuebleById(id);
-            if (actual is null || actual.IdEstadoInmueble == EstadoDisponible)
+            if (actual is null)
                 return null;
 
-            ExigirEstadoInactivo(dto);
-            return await UpdateAsync(id, dto);
+            var idDisponible = await repo.GetIdEstadoDisponibleAsync();
+            var estabaDisponible = actual.IdEstadoInmueble == idDisponible;
+            var quedaDisponible = dto.IdEstadoInmueble == idDisponible;
+
+            var actualizado = await UpdateAsync(id, dto);
+
+            // Si la propiedad deja de estar Disponible, sus publicaciones activas
+            // tienen que bajarse. Si no, seguiria apareciendo en el catalogo publico,
+            // porque vw_PublicacionesActivas mira la publicacion y no el estado del inmueble.
+            if (actualizado is not null && estabaDisponible && !quedaDisponible)
+            {
+                await repo.DarDeBajaPublicacionesActivasAsync(id);
+            }
+
+            return actualizado;
         }
 
-        public async Task<bool> DeleteInactivoAsync(int id)
+        public async Task<bool> DeletePropiedadAsync(int id)
         {
             var actual = await repo.GetInmuebleById(id);
-            if (actual is null || actual.IdEstadoInmueble == EstadoDisponible)
+            if (actual is null)
                 return false;
 
             if (await repo.TieneContratosAsync(id))
@@ -154,12 +163,6 @@ namespace InmoWeb.Services.Inmuebles
         public async Task<CatalogosInmuebleDto> GetCatalogosAsync()
         {
             return await repo.GetCatalogosAsync();
-        }
-
-        private static void ExigirEstadoInactivo(InmuebleBaseDto dto)
-        {
-            if (dto.IdEstadoInmueble == EstadoDisponible)
-                throw new BusinesException("Un inmueble inactivo no puede tener el estado Disponible.");
         }
 
 

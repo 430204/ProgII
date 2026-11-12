@@ -27,10 +27,19 @@ namespace InmoWeb.Repositories.Inmueble.Interfaz
         string? moneda,
         decimal? precioMaximo);
 
-        // ---- CRUD de inmuebles inactivos (estado distinto de Disponible) ----
-        Task<List<InmuebleInactivoListDto>> GetInactivosListadoAsync(string? texto, int? idEstado);
+        // ---- ABM de propiedades ----
+        // El alta crea propiedades Disponibles; la edicion es la que las pasa
+        // a Vendido, Alquilado o Reservado.
+        Task<List<InmuebleListaDto>> GetPropiedadesListadoAsync(string? texto, int? idEstado);
         Task<bool> TieneContratosAsync(int idInmueble);
         Task<bool> EliminarInmuebleAsync(int idInmueble);
         Task<CatalogosInmuebleDto> GetCatalogosAsync();
+
+        // Resuelve el id del estado Disponible por descripcion, sin hardcodearlo
+        Task<int> GetIdEstadoDisponibleAsync();
+
+        // Al marcar una propiedad como no disponible hay que bajar sus publicaciones
+        // activas, si no seguiria apareciendo en el catalogo publico
+        Task<int> DarDeBajaPublicacionesActivasAsync(int idInmueble);
     }
 }

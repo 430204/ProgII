@@ -1,10 +1,11 @@
 ﻿using InmoWeb.DTOs;
 using InmoWeb.Models;
+using InmoWeb.Repositories.Persona.Interfaz;
 using Microsoft.EntityFrameworkCore;
 
 namespace InmoWeb.Repositories.Persona
 {
-    public class PersonaRepository
+    public class PersonaRepository : IPersonaRepository
     {
 
         private readonly InmobiliariaDBContext db;
@@ -17,7 +18,19 @@ namespace InmoWeb.Repositories.Persona
 
         public async Task<bool> login(UserLoginDTO user)
         {
-            return await db.Personas.FirstOrDefaultAsync(x => x.Apellido.Equals(user.Apellido) && x.Dni.Equals(user.DNI)) != null;
+            if (user is null
+                || string.IsNullOrWhiteSpace(user.Apellido)
+                || string.IsNullOrWhiteSpace(user.DNI))
+            {
+                return false;
+            }
+
+            var apellido = user.Apellido.Trim();
+            var dni = user.DNI.Trim();
+
+            return await db.Personas
+                .AsNoTracking()
+                .AnyAsync(p => p.Apellido == apellido && p.Dni == dni);
         }
     }
 }

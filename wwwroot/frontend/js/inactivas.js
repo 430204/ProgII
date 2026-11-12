@@ -1,5 +1,7 @@
-// CRUD de propiedades inactivas (estado distinto de Disponible), integrado en Indice.html.
-// API: GET/POST /Inmueble/inactivos, GET/PUT/DELETE /Inmueble/inactivos/{id}, GET /Inmueble/catalogos
+// ABM de propiedades, integrado en Indice.html.
+// Ciclo de vida: el alta crea la propiedad Disponible y la edicion es la que la
+// pasa a Vendido, Alquilado o Reservado (y da de baja sus publicaciones activas).
+// API: GET/POST /Inmueble/propiedades, GET/PUT/DELETE /Inmueble/propiedades/{id}, GET /Inmueble/catalogos
 (function () {
     "use strict";
 
@@ -14,9 +16,13 @@
     const form = $("formulario-inmueble");
     const dialogo = $("dialogo-inmueble");
     const dialogoEliminar = $("dialogo-eliminar");
+    const selectEstado = $("inm-estado");
+    const ayudaEstado = $("ayuda-estado");
 
-    let idEditando = null;   // null = alta, número = edición
+    let idEditando = null;        // null = alta, número = edición
+    let estadoAnterior = null;    // estado que tenía la propiedad antes de editarla
     let pendienteEliminar = null; // { id, codigo }
+    let catalogos = null;         // respuesta de /Inmueble/catalogos
 
     // ---------- Utilidades ----------
     function mostrar(elemento, texto, tipo) {
@@ -66,23 +72,31 @@
 
     function claseEstado(estado) {
         const e = (estado || "").toLowerCase();
+        if (e === "disponible") return "crud-badge crud-badge-disponible";
         if (e === "vendido") return "crud-badge crud-badge-vendido";
         if (e === "alquilado") return "crud-badge crud-badge-alquilado";
         if (e === "reservado") return "crud-badge crud-badge-reservado";
         return "crud-badge";
     }
 
+    function textoEstado(idEstado) {
+        const encontrado = catalogos.estados.find(function (e) {
+            return e.id === Number(idEstado);
+        });
+        return encontrado ? encontrado.texto : "";
+    }
+
     // ---------- Catálogos (desplegables) ----------
     async function cargarCatalogos() {
         const respuesta = await fetch(API + "/catalogos");
         if (!respuesta.ok) throw new Error("No se pudieron cargar los catálogos.");
-        const c = await respuesta.json();
+        catalogos = await respuesta.json();
 
-        llenarSelect($("inm-tipo"), c.tipos);
-        llenarSelect($("inm-estado"), c.estadosInactivos);
-        llenarSelect($("inm-direccion"), c.direcciones);
-        llenarSelect($("inm-inmobiliaria"), c.inmobiliarias);
-        llenarSelect($("filtro-estado-inactivas"), c.estadosInactivos, "Todos");
+        llenarSelect($("inm-tipo"), catalogos.tipos);
+        llenarSelect($("inm-direccion"), catalogos.direcciones);
+        llenarSelect($("inm-inmobiliaria"), catalogos.inmobiliarias);
+        llenarSelect(selectEstado, catalogos.estados);
+        llenarSelect($("filtro-estado-inactivas"), catalogos.estados, "Todos");
     }
 
     // ---------- READ: listado ----------
@@ -93,7 +107,7 @@
         if (texto !== "") parametros.append("texto", texto);
         if (estado !== "") parametros.append("idEstado", estado);
 
-        const respuesta = await fetch(API + "/inactivos?" + parametros.toString());
+        const respuesta = await fetch(API + "/propiedades?" + parametros.toString());
         if (!respuesta.ok) {
             mostrar(mensaje, await textoDeError(respuesta), "error");
             return;
@@ -103,11 +117,11 @@
 
     function dibujarTabla(lista) {
         cuerpo.innerHTML = "";
-        cantidad.textContent = "Propiedades inactivas encontradas: " + lista.length;
+        cantidad.textContent = "Propiedades encontradas: " + lista.length;
 
         if (lista.length === 0) {
             const fila = document.createElement("tr");
-            const td = celda(fila, "No se encontraron propiedades inactivas.");
+            const td = celda(fila, "No se encontraron propiedades con esos filtros.");
             td.colSpan = 9;
             td.className = "crud-vacio";
             cuerpo.appendChild(fila);
@@ -172,23 +186,30 @@
             cochera: $("inm-cochera").checked,
             idDireccion: Number($("inm-direccion").value),
             idTipoInmueble: Number($("inm-tipo").value),
-            idEstadoInmueble: Number($("inm-estado").value),
+            idEstadoInmueble: Number(selectEstado.value),
             idInmobiliaria: Number($("inm-inmobiliaria").value)
         };
     }
 
     function abrirAlta() {
         idEditando = null;
+        estadoAnterior = null;
         form.reset();
         ocultar(mensajeDialogo);
-        $("titulo-dialogo-inmueble").textContent = "Nueva propiedad inactiva";
-        $("boton-guardar-inmueble").textContent = "Guardar";
+
+        // En el alta el estado no se elige: la propiedad nace Disponible.
+        selectEstado.value = catalogos.estadoDisponibleId;
+        selectEstado.disabled = true;
+        ayudaEstado.textContent = "Las propiedades nuevas se cargan como Disponibles.";
+
+        $("titulo-dialogo-inmueble").textContent = "Nueva propiedad";
+        $("boton-guardar-inmueble").textContent = "Dar de alta";
         dialogo.showModal();
     }
 
     async function abrirEdicion(id) {
         ocultar(mensaje);
-        const respuesta = await fetch(API + "/inactivos/" + id);
+        const respuesta = await fetch(API + "/propiedades/" + id);
         if (!respuesta.ok) {
             mostrar(mensaje, await textoDeError(respuesta), "error");
             return;
@@ -207,14 +228,39 @@
         $("inm-cochera").checked = i.cochera;
         $("inm-direccion").value = i.idDireccion;
         $("inm-tipo").value = i.idTipoInmueble;
-        $("inm-estado").value = i.idEstadoInmueble;
         $("inm-inmobiliaria").value = i.idInmobiliaria;
 
+        // En la edición sí se puede cambiar el estado: acá es donde una propiedad
+        // Disponible pasa a Vendida, Alquilada o Reservada.
+        selectEstado.disabled = false;
+        selectEstado.value = i.idEstadoInmueble;
+        ayudaEstado.textContent = i.idEstadoInmueble === catalogos.estadoDisponibleId
+            ? "Cambiá el estado para concretar la operación. Al dejar de estar Disponible se dan de baja sus publicaciones."
+            : "";
+
         idEditando = id;
+        estadoAnterior = i.idEstadoInmueble;
         ocultar(mensajeDialogo);
         $("titulo-dialogo-inmueble").textContent = "Editar propiedad " + i.codigo;
         $("boton-guardar-inmueble").textContent = "Guardar cambios";
         dialogo.showModal();
+    }
+
+    function mensajeDeExito(editando, cuerpoEnviado) {
+        if (!editando) {
+            return "Propiedad creada como Disponible.";
+        }
+
+        const dejoDeEstarDisponible =
+            estadoAnterior === catalogos.estadoDisponibleId &&
+            cuerpoEnviado.idEstadoInmueble !== catalogos.estadoDisponibleId;
+
+        if (dejoDeEstarDisponible) {
+            return "Propiedad marcada como " + textoEstado(cuerpoEnviado.idEstadoInmueble) +
+                ". Se dieron de baja sus publicaciones activas.";
+        }
+
+        return "Propiedad actualizada correctamente.";
     }
 
     // CREATE / UPDATE
@@ -223,13 +269,14 @@
         ocultar(mensajeDialogo);
 
         const editando = idEditando !== null;
-        const url = editando ? API + "/inactivos/" + idEditando : API + "/inactivos";
+        const url = editando ? API + "/propiedades/" + idEditando : API + "/propiedades";
+        const cuerpoEnviado = leerFormulario();
 
         try {
             const respuesta = await fetch(url, {
                 method: editando ? "PUT" : "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(leerFormulario())
+                body: JSON.stringify(cuerpoEnviado)
             });
 
             if (!respuesta.ok) {
@@ -237,9 +284,11 @@
                 return;
             }
 
+            const texto = mensajeDeExito(editando, cuerpoEnviado);
             dialogo.close();
-            mostrar(mensaje, editando ? "Propiedad actualizada correctamente." : "Propiedad creada correctamente.", "ok");
+            mostrar(mensaje, texto, "ok");
             await cargarListado();
+            document.dispatchEvent(new CustomEvent("propiedades-actualizadas"));
         } catch (error) {
             mostrar(mensajeDialogo, "No se pudo conectar con el servidor.", "error");
             console.error(error);
@@ -247,7 +296,11 @@
     });
 
     $("boton-cancelar-inmueble").addEventListener("click", function () { dialogo.close(); });
-    dialogo.addEventListener("close", function () { idEditando = null; });
+    dialogo.addEventListener("close", function () {
+        idEditando = null;
+        estadoAnterior = null;
+        selectEstado.disabled = false;
+    });
 
     // ---------- DELETE ----------
     function pedirConfirmacion(id, codigo) {
@@ -270,13 +323,14 @@
         ocultar(mensaje);
 
         try {
-            const respuesta = await fetch(API + "/inactivos/" + objetivo.id, { method: "DELETE" });
+            const respuesta = await fetch(API + "/propiedades/" + objetivo.id, { method: "DELETE" });
             if (!respuesta.ok) {
                 mostrar(mensaje, await textoDeError(respuesta), "error");
                 return;
             }
             mostrar(mensaje, "Propiedad " + objetivo.codigo + " eliminada.", "ok");
             await cargarListado();
+            document.dispatchEvent(new CustomEvent("propiedades-actualizadas"));
         } catch (error) {
             mostrar(mensaje, "No se pudo conectar con el servidor.", "error");
             console.error(error);

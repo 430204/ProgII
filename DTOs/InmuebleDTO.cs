@@ -75,8 +75,8 @@ public class InmuebleResponseDto
     public int IdInmobiliaria { get; set; }
 }
 
-// Fila del listado de inmuebles inactivos
-public class InmuebleInactivoListDto
+// Fila del listado del ABM de propiedades
+public class InmuebleListaDto
 {
     public int IdInmueble { get; set; }
     public string Codigo { get; set; } = string.Empty;
@@ -101,7 +101,17 @@ public class OpcionDto
 public class CatalogosInmuebleDto
 {
     public List<OpcionDto> Tipos { get; set; } = new();
+
+    // Todos los estados, para el filtro del listado
+    public List<OpcionDto> Estados { get; set; } = new();
+
+    // Solo los estados que NO son Disponible: son las opciones validas
+    // para marcar una propiedad como vendida, alquilada o reservada
     public List<OpcionDto> EstadosInactivos { get; set; } = new();
+
+    // Id real del estado Disponible, resuelto por descripcion y no fijo en el codigo
+    public int EstadoDisponibleId { get; set; }
+
     public List<OpcionDto> Direcciones { get; set; } = new();
     public List<OpcionDto> Inmobiliarias { get; set; } = new();
 }

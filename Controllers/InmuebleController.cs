@@ -98,5 +98,78 @@ namespace InmoWeb.Controllers
             }
         }
 
+        // ================= CRUD de inmuebles inactivos =================
+
+        [HttpGet("inactivos")]
+        public async Task<IActionResult> GetInactivos([FromQuery] string? texto = null, [FromQuery] int? idEstado = null)
+        {
+            try
+            {
+                return Ok(await service.GetInactivosAsync(texto, idEstado));
+            }
+            catch (BusinesException ex)
+            {
+                return BadRequest(new { mensaje = ex.Message });
+            }
+        }
+
+        [HttpGet("inactivos/{id:int}")]
+        public async Task<ActionResult<InmuebleResponseDto>> GetInactivoById(int id)
+        {
+            var inmueble = await service.GetInactivoByIdAsync(id);
+            return inmueble is null ? NotFound() : Ok(inmueble);
+        }
+
+        [HttpPost("inactivos")]
+        public async Task<ActionResult<InmuebleResponseDto>> CreateInactivo([FromBody] InmuebleCreateDto dto)
+        {
+            if (!ModelState.IsValid)
+                return ValidationProblem(ModelState);
+            try
+            {
+                var creado = await service.CreateInactivoAsync(dto);
+                return CreatedAtAction(nameof(GetInactivoById), new { id = creado.IdInmueble }, creado);
+            }
+            catch (BusinesException ex)
+            {
+                return Conflict(new { mensaje = ex.Message });
+            }
+        }
+
+        [HttpPut("inactivos/{id:int}")]
+        public async Task<ActionResult<InmuebleResponseDto>> UpdateInactivo(int id, [FromBody] InmuebleUpdateDto dto)
+        {
+            if (!ModelState.IsValid)
+                return ValidationProblem(ModelState);
+            try
+            {
+                var actualizado = await service.UpdateInactivoAsync(id, dto);
+                return actualizado is null ? NotFound() : Ok(actualizado);
+            }
+            catch (BusinesException ex)
+            {
+                return Conflict(new { mensaje = ex.Message });
+            }
+        }
+
+        [HttpDelete("inactivos/{id:int}")]
+        public async Task<IActionResult> DeleteInactivo(int id)
+        {
+            try
+            {
+                var eliminado = await service.DeleteInactivoAsync(id);
+                return eliminado ? NoContent() : NotFound();
+            }
+            catch (BusinesException ex)
+            {
+                return Conflict(new { mensaje = ex.Message });
+            }
+        }
+
+        [HttpGet("catalogos")]
+        public async Task<ActionResult<CatalogosInmuebleDto>> GetCatalogos()
+        {
+            return Ok(await service.GetCatalogosAsync());
+        }
     }
 }

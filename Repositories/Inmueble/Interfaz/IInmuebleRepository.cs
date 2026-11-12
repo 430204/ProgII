@@ -27,6 +27,10 @@ namespace InmoWeb.Repositories.Inmueble.Interfaz
         string? moneda,
         decimal? precioMaximo);
 
-
+        // ---- CRUD de inmuebles inactivos (estado distinto de Disponible) ----
+        Task<List<InmuebleInactivoListDto>> GetInactivosListadoAsync(string? texto, int? idEstado);
+        Task<bool> TieneContratosAsync(int idInmueble);
+        Task<bool> EliminarInmuebleAsync(int idInmueble);
+        Task<CatalogosInmuebleDto> GetCatalogosAsync();
     }
 }

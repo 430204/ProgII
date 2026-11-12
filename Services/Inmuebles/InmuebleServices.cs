@@ -8,6 +8,9 @@ namespace InmoWeb.Services.Inmuebles
 {
     public class InmuebleServices : IInmuebleServices
     {
+        // Un inmueble "activo" es el que esta Disponible; cualquier otro estado es "inactivo"
+        private const int EstadoDisponible = 1;
+
         private readonly IInmuebleRepository repo;
 
         public InmuebleServices(IInmuebleRepository repo)
@@ -100,6 +103,65 @@ namespace InmoWeb.Services.Inmuebles
         }
 
     
+
+        // ================= CRUD de inmuebles inactivos =================
+
+        public async Task<List<InmuebleInactivoListDto>> GetInactivosAsync(string? texto, int? idEstado)
+        {
+            if (idEstado == EstadoDisponible)
+                throw new BusinesException("El estado Disponible no corresponde a un inmueble inactivo.");
+
+            return await repo.GetInactivosListadoAsync(texto, idEstado);
+        }
+
+        public async Task<InmuebleResponseDto?> GetInactivoByIdAsync(int id)
+        {
+            var inmueble = await repo.GetInmuebleById(id);
+            if (inmueble is null || inmueble.IdEstadoInmueble == EstadoDisponible)
+                return null;
+
+            return MapToResponse(inmueble);
+        }
+
+        public async Task<InmuebleResponseDto> CreateInactivoAsync(InmuebleCreateDto dto)
+        {
+            ExigirEstadoInactivo(dto);
+            return await CreateAsync(dto);
+        }
+
+        public async Task<InmuebleResponseDto?> UpdateInactivoAsync(int id, InmuebleUpdateDto dto)
+        {
+            var actual = await repo.GetInmuebleById(id);
+            if (actual is null || actual.IdEstadoInmueble == EstadoDisponible)
+                return null;
+
+            ExigirEstadoInactivo(dto);
+            return await UpdateAsync(id, dto);
+        }
+
+        public async Task<bool> DeleteInactivoAsync(int id)
+        {
+            var actual = await repo.GetInmuebleById(id);
+            if (actual is null || actual.IdEstadoInmueble == EstadoDisponible)
+                return false;
+
+            if (await repo.TieneContratosAsync(id))
+                throw new BusinesException("No se puede eliminar: el inmueble tiene contratos asociados.");
+
+            return await repo.EliminarInmuebleAsync(id);
+        }
+
+        public async Task<CatalogosInmuebleDto> GetCatalogosAsync()
+        {
+            return await repo.GetCatalogosAsync();
+        }
+
+        private static void ExigirEstadoInactivo(InmuebleBaseDto dto)
+        {
+            if (dto.IdEstadoInmueble == EstadoDisponible)
+                throw new BusinesException("Un inmueble inactivo no puede tener el estado Disponible.");
+        }
+
 
     private async Task ValidarReglasAsync(InmuebleBaseDto dto, int? idExcluir)
         {

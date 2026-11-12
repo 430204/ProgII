@@ -22,5 +22,13 @@ namespace InmoWeb.Services.Inmuebles.Interfaces
         string? operacion,
         string? moneda,
         decimal? precioMaximo);
+
+        // ---- CRUD de inmuebles inactivos ----
+        Task<List<InmuebleInactivoListDto>> GetInactivosAsync(string? texto, int? idEstado);
+        Task<InmuebleResponseDto?> GetInactivoByIdAsync(int id);
+        Task<InmuebleResponseDto> CreateInactivoAsync(InmuebleCreateDto dto);
+        Task<InmuebleResponseDto?> UpdateInactivoAsync(int id, InmuebleUpdateDto dto);
+        Task<bool> DeleteInactivoAsync(int id);
+        Task<CatalogosInmuebleDto> GetCatalogosAsync();
     }
 }

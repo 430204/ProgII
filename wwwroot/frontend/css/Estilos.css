@@ -448,3 +448,127 @@ footer {
     margin-bottom: 12px;
     font-size: 16px;
 }
+
+/* ================= CRUD de propiedades inactivas ================= */
+#inactivas { margin-top: 20px; }
+
+.crud-encabezado {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+    .crud-encabezado h2 { margin-bottom: 6px; }
+    .crud-encabezado p { color: #555; }
+
+.crud-btn {
+    border: none;
+    border-radius: 6px;
+    padding: 12px 20px;
+    font-size: 15px;
+    color: white;
+    cursor: pointer;
+    background-color: #6c7a89;
+}
+
+    .crud-btn:hover { filter: brightness(1.12); }
+
+.crud-btn-primario { background-color: #17324d; }
+.crud-btn-peligro { background-color: #b3261e; }
+.crud-btn-chico { padding: 6px 12px; font-size: 13px; margin-left: 4px; }
+
+.crud-mensaje {
+    margin-bottom: 16px;
+    padding: 12px 16px;
+    border-radius: 6px;
+    text-align: left;
+}
+
+    .crud-mensaje.ok { background-color: #e6f4ea; color: #1e6b35; border: 1px solid #b7dcc1; }
+    .crud-mensaje.error { background-color: #fdecea; color: #8c1d18; border: 1px solid #f3b9b4; }
+
+.crud-filtros {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 12px;
+    background-color: white;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+    .crud-filtros > div { flex: 1 1 200px; min-width: 0; text-align: left; }
+
+.crud-campo { display: flex; flex-direction: column; gap: 6px; text-align: left; }
+
+    .crud-campo label { font-size: 14px; font-weight: bold; }
+
+    .crud-campo input,
+    .crud-campo select,
+    .crud-campo textarea {
+        width: 100%;
+        padding: 11px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: white;
+        font: inherit;
+    }
+
+#cantidad-inactivas { margin-bottom: 10px; font-weight: bold; }
+
+.crud-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: bold;
+    background-color: #e3e6ea;
+    color: #333;
+}
+
+.crud-badge-vendido { background-color: #fdecea; color: #8c1d18; }
+.crud-badge-alquilado { background-color: #e3effa; color: #174a7c; }
+.crud-badge-reservado { background-color: #fdf3dc; color: #8a5a00; }
+
+.crud-vacio { text-align: center !important; color: #666; padding: 24px !important; }
+
+.crud-dialogo {
+    border: none;
+    border-radius: 10px;
+    padding: 26px;
+    width: min(720px, 94vw);
+    max-height: 92vh;
+    overflow-y: auto;
+    margin: auto;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+}
+
+    .crud-dialogo::backdrop { background-color: rgba(23, 50, 77, 0.55); }
+    .crud-dialogo h3 { margin-bottom: 16px; }
+
+.crud-dialogo-chico { width: min(440px, 94vw); }
+
+.crud-grilla {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+}
+
+.crud-ancho { grid-column: 1 / -1; }
+
+.crud-check { flex-direction: row; align-items: center; gap: 8px; }
+
+    .crud-check input { width: auto; }
+
+.crud-acciones {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}

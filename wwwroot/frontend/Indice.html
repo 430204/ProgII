@@ -15,6 +15,7 @@
         <nav>
             <a href="Indice.html">Inicio</a>
             <a href="#propiedades">Propiedades</a>
+            <a href="#inactivas">Propiedades inactivas</a>
             <a href="Contacto.html">Contacto</a>
             <a href="Login.html">Iniciar sesión</a>
         </nav>
@@ -91,6 +92,101 @@
                 </table>
             </div>
         </section>
+
+        <section id="inactivas">
+            <div class="crud-encabezado">
+                <div>
+                    <h2>Propiedades inactivas</h2>
+                    <p>Gestión de inmuebles que no están disponibles: vendidos, alquilados o reservados.</p>
+                </div>
+                <button type="button" id="boton-nueva-inactiva" class="crud-btn crud-btn-primario">+ Nueva propiedad</button>
+            </div>
+
+            <p id="mensaje-inactivas" class="crud-mensaje" role="status" aria-live="polite" hidden></p>
+
+            <form id="formulario-filtros-inactivas" class="crud-filtros">
+                <div class="crud-campo">
+                    <label for="filtro-texto-inactivas">Buscar por código, título o ciudad</label>
+                    <input type="text" id="filtro-texto-inactivas" placeholder="Ej: COR-0003, Villa Allende">
+                </div>
+                <div class="crud-campo">
+                    <label for="filtro-estado-inactivas">Estado</label>
+                    <select id="filtro-estado-inactivas"><option value="">Todos</option></select>
+                </div>
+                <button type="submit" class="crud-btn crud-btn-primario">Buscar</button>
+            </form>
+
+            <p id="cantidad-inactivas" aria-live="polite"></p>
+
+            <div class="contenedor-tabla">
+                <table class="tabla-resultados">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Propiedad</th>
+                            <th>Tipo</th>
+                            <th>Estado</th>
+                            <th>Dirección</th>
+                            <th>Sup. total</th>
+                            <th>Dorm.</th>
+                            <th>Baños</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpo-inactivas"></tbody>
+                </table>
+            </div>
+
+            <dialog id="dialogo-inmueble" class="crud-dialogo">
+                <h3 id="titulo-dialogo-inmueble">Nueva propiedad inactiva</h3>
+                <p id="mensaje-dialogo" class="crud-mensaje error" role="alert" hidden></p>
+
+                <form id="formulario-inmueble">
+                    <div class="crud-grilla">
+                        <div class="crud-campo"><label for="inm-codigo">Código</label>
+                            <input type="text" id="inm-codigo" maxlength="20" required></div>
+                        <div class="crud-campo"><label for="inm-titulo">Título</label>
+                            <input type="text" id="inm-titulo" maxlength="150" required></div>
+                        <div class="crud-campo"><label for="inm-tipo">Tipo de inmueble</label>
+                            <select id="inm-tipo" required></select></div>
+                        <div class="crud-campo"><label for="inm-estado">Estado</label>
+                            <select id="inm-estado" required></select></div>
+                        <div class="crud-campo"><label for="inm-direccion">Dirección</label>
+                            <select id="inm-direccion" required></select></div>
+                        <div class="crud-campo"><label for="inm-inmobiliaria">Inmobiliaria</label>
+                            <select id="inm-inmobiliaria" required></select></div>
+                        <div class="crud-campo"><label for="inm-sup-total">Superficie total (m²)</label>
+                            <input type="number" id="inm-sup-total" min="0.01" step="0.01" required></div>
+                        <div class="crud-campo"><label for="inm-sup-cubierta">Superficie cubierta (m²)</label>
+                            <input type="number" id="inm-sup-cubierta" min="0" step="0.01"></div>
+                        <div class="crud-campo"><label for="inm-ambientes">Ambientes</label>
+                            <input type="number" id="inm-ambientes" min="0" max="100"></div>
+                        <div class="crud-campo"><label for="inm-dormitorios">Dormitorios</label>
+                            <input type="number" id="inm-dormitorios" min="0" max="50"></div>
+                        <div class="crud-campo"><label for="inm-banios">Baños</label>
+                            <input type="number" id="inm-banios" min="0" max="50"></div>
+                        <div class="crud-campo crud-check">
+                            <input type="checkbox" id="inm-cochera">
+                            <label for="inm-cochera">Tiene cochera</label></div>
+                        <div class="crud-campo crud-ancho"><label for="inm-descripcion">Descripción (máx. 500 caracteres)</label>
+                            <textarea id="inm-descripcion" rows="3" maxlength="500"></textarea></div>
+                    </div>
+                    <div class="crud-acciones">
+                        <button type="button" id="boton-cancelar-inmueble" class="crud-btn">Cancelar</button>
+                        <button type="submit" id="boton-guardar-inmueble" class="crud-btn crud-btn-primario">Guardar</button>
+                    </div>
+                </form>
+            </dialog>
+
+            <dialog id="dialogo-eliminar" class="crud-dialogo crud-dialogo-chico">
+                <h3>Eliminar propiedad</h3>
+                <p id="texto-eliminar"></p>
+                <div class="crud-acciones">
+                    <button type="button" id="boton-cancelar-eliminar" class="crud-btn">Cancelar</button>
+                    <button type="button" id="boton-confirmar-eliminar" class="crud-btn crud-btn-peligro">Eliminar</button>
+                </div>
+            </dialog>
+        </section>
     </main>
 
     <footer>
@@ -98,5 +194,6 @@
     </footer>
 
     <script src="js/Propiedades.js"></script>
+    <script src="js/inactivas.js"></script>
 </body>
 </html>

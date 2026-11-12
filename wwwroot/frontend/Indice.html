@@ -15,6 +15,10 @@
         <nav>
             <a href="Indice.html">Inicio</a>
             <a href="#propiedades">Propiedades</a>
+            <a href="#gestion">Gestión</a>
+            <a href="Inmobiliarias.html">Inmobiliarias</a>
+            <a href="Operaciones.html">Operaciones</a>
+            <a href="Reportes.html">Reportes</a>
             <a href="Contacto.html">Contacto</a>
             <a href="Login.html">Iniciar sesión</a>
         </nav>
@@ -26,75 +30,175 @@
                 <h2>Encontrá tu próxima propiedad</h2>
                 <p>Descubrí casas, departamentos y terrenos en Córdoba.</p>
 
-
                 <form class="buscador" id="formulario-busqueda">
-                    <input type="text"
-                           id="texto-busqueda"
-                           placeholder="¿Qué propiedad estás buscando?">
+                    <div>
+                        <label for="texto-busqueda">Buscar por texto</label>
+                        <input type="text"
+                               id="texto-busqueda"
+                               placeholder="Título, ciudad o tipo">
+                    </div>
+
+                    <div>
+                        <label for="operacion">Operación</label>
+                        <select id="operacion">
+                            <option value="">Todas</option>
+                            <option value="Venta">Venta</option>
+                            <option value="Alquiler">Alquiler</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="moneda">Moneda</label>
+                        <select id="moneda">
+                            <option value="">Todas</option>
+                            <option value="ARS">Pesos argentinos</option>
+                            <option value="USD">Dólares</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="precio-maximo">Precio máximo</label>
+                        <input type="number"
+                               id="precio-maximo"
+                               min="0.01"
+                               step="0.01"
+                               placeholder="Sin límite">
+                    </div>
 
                     <button type="submit">Buscar propiedades</button>
                 </form>
-
             </div>
         </section>
-
 
         <section id="propiedades">
             <h2>Propiedades disponibles</h2>
 
-            <div id="lista-inmuebles" class="contenedor-propiedades">
+            <div id="lista-inmuebles" class="contenedor-propiedades"></div>
 
-                <article class="tarjeta-propiedad">
-                    <img src="imagenes/casa1.jpg" alt="Casa en Nueva Córdoba" class="imagen-propiedad">
+            <h3>Resultados de la búsqueda</h3>
+            <p id="cantidad-resultados" aria-live="polite"></p>
 
-                    <div class="informacion-propiedad">
-                        <h3>Casa en Nueva Córdoba</h3>
-                        <p>Córdoba Capital</p>
-                        <p>3 dormitorios - 2 baños</p>
-                        <h4>USD 150.000</h4>
-                        <button type="button" onclick="verDetalles(0)">
-                            Ver detalles
-                        </button>
-                    </div>
-                </article>
-
-                <article class="tarjeta-propiedad">
-                    <img src="imagenes/dto1.jpg" alt="Departamento en General Paz" class="imagen-propiedad">
-
-                    <div class="informacion-propiedad">
-                        <h3>Departamento en General Paz</h3>
-                        <p>Córdoba Capital</p>
-                        <p>2 dormitorios - 1 baño</p>
-                        <h4>USD 95.000</h4>
-                        <button type="button" onclick="verDetalles(1)">
-                            Ver detalles
-                        </button>
-                    </div>
-                </article>
-
-                <article class="tarjeta-propiedad">
-                    <img src="imagenes/casa2.jpg" alt="Casa en Villa Allende" class="imagen-propiedad">
-
-                    <div class="informacion-propiedad">
-                        <h3>Casa en Villa Allende</h3>
-                        <p>Villa Allende, Córdoba</p>
-                        <p>4 dormitorios - 3 baños</p>
-                        <h4>USD 220.000</h4>
-                        <button type="button" onclick="verDetalles(2)">
-                            Ver detalles
-                        </button>
-                    </div>
-                </article>
-
+            <div class="contenedor-tabla">
+                <table class="tabla-resultados">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Propiedad</th>
+                            <th>Tipo</th>
+                            <th>Ciudad</th>
+                            <th>Operación</th>
+                            <th>Moneda</th>
+                            <th>Precio</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpo-resultados"></tbody>
+                </table>
             </div>
         </section>
 
+        <section id="gestion">
+            <div class="crud-encabezado">
+                <div>
+                    <h2>Gestión de propiedades</h2>
+                    <p>Alta, edición y baja del inventario. Las propiedades nuevas se cargan como
+                       <strong>Disponibles</strong>; al editarlas se las pasa a vendidas, alquiladas o reservadas.</p>
+                </div>
+                <button type="button" id="boton-nueva-inactiva" class="crud-btn crud-btn-primario">+ Nueva propiedad</button>
+            </div>
+
+            <p id="mensaje-inactivas" class="crud-mensaje" role="status" aria-live="polite" hidden></p>
+
+            <form id="formulario-filtros-inactivas" class="crud-filtros">
+                <div class="crud-campo">
+                    <label for="filtro-texto-inactivas">Buscar por código, título o ciudad</label>
+                    <input type="text" id="filtro-texto-inactivas" placeholder="Ej: COR-0003, Villa Allende">
+                </div>
+                <div class="crud-campo">
+                    <label for="filtro-estado-inactivas">Estado</label>
+                    <select id="filtro-estado-inactivas"><option value="">Todos</option></select>
+                </div>
+                <button type="submit" class="crud-btn crud-btn-primario">Buscar</button>
+            </form>
+
+            <p id="cantidad-inactivas" aria-live="polite"></p>
+
+            <div class="contenedor-tabla">
+                <table class="tabla-resultados">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Propiedad</th>
+                            <th>Tipo</th>
+                            <th>Estado</th>
+                            <th>Dirección</th>
+                            <th>Sup. total</th>
+                            <th>Dorm.</th>
+                            <th>Baños</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpo-inactivas"></tbody>
+                </table>
+            </div>
+
+            <dialog id="dialogo-inmueble" class="crud-dialogo">
+                <h3 id="titulo-dialogo-inmueble">Nueva propiedad</h3>
+                <p id="mensaje-dialogo" class="crud-mensaje error" role="alert" hidden></p>
+
+                <form id="formulario-inmueble">
+                    <div class="crud-grilla">
+                        <div class="crud-campo"><label for="inm-codigo">Código</label>
+                            <input type="text" id="inm-codigo" maxlength="20" required></div>
+                        <div class="crud-campo"><label for="inm-titulo">Título</label>
+                            <input type="text" id="inm-titulo" maxlength="150" required></div>
+                        <div class="crud-campo"><label for="inm-tipo">Tipo de inmueble</label>
+                            <select id="inm-tipo" required></select></div>
+                        <div class="crud-campo"><label for="inm-estado">Estado</label>
+                            <select id="inm-estado" required></select>
+                            <small id="ayuda-estado" class="crud-ayuda"></small></div>
+                        <div class="crud-campo"><label for="inm-direccion">Dirección</label>
+                            <select id="inm-direccion" required></select></div>
+                        <div class="crud-campo"><label for="inm-inmobiliaria">Inmobiliaria</label>
+                            <select id="inm-inmobiliaria" required></select></div>
+                        <div class="crud-campo"><label for="inm-sup-total">Superficie total (m²)</label>
+                            <input type="number" id="inm-sup-total" min="0.01" step="0.01" required></div>
+                        <div class="crud-campo"><label for="inm-sup-cubierta">Superficie cubierta (m²)</label>
+                            <input type="number" id="inm-sup-cubierta" min="0" step="0.01"></div>
+                        <div class="crud-campo"><label for="inm-ambientes">Ambientes</label>
+                            <input type="number" id="inm-ambientes" min="0" max="100"></div>
+                        <div class="crud-campo"><label for="inm-dormitorios">Dormitorios</label>
+                            <input type="number" id="inm-dormitorios" min="0" max="50"></div>
+                        <div class="crud-campo"><label for="inm-banios">Baños</label>
+                            <input type="number" id="inm-banios" min="0" max="50"></div>
+                        <div class="crud-campo crud-check">
+                            <input type="checkbox" id="inm-cochera">
+                            <label for="inm-cochera">Tiene cochera</label></div>
+                        <div class="crud-campo crud-ancho"><label for="inm-descripcion">Descripción (máx. 500 caracteres)</label>
+                            <textarea id="inm-descripcion" rows="3" maxlength="500"></textarea></div>
+                    </div>
+                    <div class="crud-acciones">
+                        <button type="button" id="boton-cancelar-inmueble" class="crud-btn">Cancelar</button>
+                        <button type="submit" id="boton-guardar-inmueble" class="crud-btn crud-btn-primario">Guardar</button>
+                    </div>
+                </form>
+            </dialog>
+
+            <dialog id="dialogo-eliminar" class="crud-dialogo crud-dialogo-chico">
+                <h3>Eliminar propiedad</h3>
+                <p id="texto-eliminar"></p>
+                <div class="crud-acciones">
+                    <button type="button" id="boton-cancelar-eliminar" class="crud-btn">Cancelar</button>
+                    <button type="button" id="boton-confirmar-eliminar" class="crud-btn crud-btn-peligro">Eliminar</button>
+                </div>
+            </dialog>
+        </section>
     </main>
 
     <footer>
         <p>Inmobiliaria Córdoba</p>
     </footer>
 
-    <script src="js/propiedades.js"></script>
+    <script src="js/Propiedades.js"></script>
+    <script src="js/inactivas.js"></script>
 </body>
 </html>

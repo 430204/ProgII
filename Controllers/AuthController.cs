@@ -12,48 +12,62 @@ namespace InmoWeb.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        
-            private IPersonaRepository _repository;
+        // Misma clave, emisor y audiencia que valida Program.cs
+        private const string ClaveSecreta = "clave-super-secreta-para-poc-123456";
+        private const string Emisor = "JwtAuthPoc";
+        private const string Audiencia = "JwtAuthPocUser";
+        private const int MinutosDeVigencia = 30;
 
-            public AuthController(IPersonaRepository userRepository)
-            {
-                _repository = userRepository;
-            }
+        private readonly IPersonaRepository _repository;
 
-            [HttpPost]
-            public async Task<IActionResult> login([FromBody] UserLoginDTO user)
+        public AuthController(IPersonaRepository userRepository)
+        {
+            _repository = userRepository;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> login([FromBody] UserLoginDTO user)
+        {
+            try
             {
-                try
+                if (user == null)
+                    return BadRequest(new { mensaje = "Se requiere objeto LOGIN" });
+
+                if (!await _repository.login(user))
+                    return Unauthorized(new { mensaje = "Apellido y/o DNI incorrecto" });
+
+                var claims = new Claim[]
                 {
-                    if (user == null)
-                        return BadRequest(new { message = "Se requiere objeto LOGIN" });
-                    if (! await _repository.login(user))
-                        return Unauthorized(new { message = "Usuario y/o Password incorrecto" });
-
-                    var claims = new Claim[]
-                    {
                     new Claim("usuario", user.Apellido)
-                    };
+                };
 
-                    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("clave-super-secreta-para-poc-123456"));
-                    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(ClaveSecreta));
+                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-                    var token = new JwtSecurityToken(
-                        issuer: "JwtAuthPoc",
-                        audience: "JwtAuthPocUser",
-                        claims: claims,
-                        expires: DateTime.UtcNow.AddMinutes(30),
-                        signingCredentials: creds
-                    );
+                var expiracion = DateTime.UtcNow.AddMinutes(MinutosDeVigencia);
 
-                    var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
-                    return Ok(tokenString);
-                }
-                catch (Exception ex)
+                var token = new JwtSecurityToken(
+                    issuer: Emisor,
+                    audience: Audiencia,
+                    claims: claims,
+                    expires: expiracion,
+                    signingCredentials: creds
+                );
+
+                var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+
+                return Ok(new
                 {
-                    return StatusCode(StatusCodes.Status500InternalServerError, new { message = $"Error interno : {ex}" });
-                }
-
+                    token = tokenString,
+                    usuario = user.Apellido,
+                    expira = expiracion
+                });
             }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    new { mensaje = $"Error interno : {ex.Message}" });
+            }
+        }
     }
 }

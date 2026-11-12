@@ -18,6 +18,19 @@ namespace InmoWeb.Services.Inmuebles.Interfaces
         Task<InmuebleResponseDto> CreateAsync(InmuebleCreateDto dto);
         Task<InmuebleResponseDto?> UpdateAsync(int id, InmuebleUpdateDto dto);
 
-        Task<List<VwPublicacionesActiva>>? GetPublicacionesActivas();
+        Task<List<VwPublicacionesActiva>> GetPublicacionesActivas(
+        string? operacion,
+        string? moneda,
+        decimal? precioMaximo);
+
+        // ---- ABM de propiedades ----
+        // Alta: la propiedad nace Disponible.
+        // Edicion: es la operacion que la pasa a Vendido, Alquilado o Reservado.
+        Task<List<InmuebleListaDto>> GetPropiedadesAsync(string? texto, int? idEstado);
+        Task<InmuebleResponseDto?> GetPropiedadByIdAsync(int id);
+        Task<InmuebleResponseDto> CreatePropiedadAsync(InmuebleCreateDto dto);
+        Task<InmuebleResponseDto?> UpdatePropiedadAsync(int id, InmuebleUpdateDto dto);
+        Task<bool> DeletePropiedadAsync(int id);
+        Task<CatalogosInmuebleDto> GetCatalogosAsync();
     }
 }

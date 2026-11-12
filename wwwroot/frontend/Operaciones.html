@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operaciones - Inmobiliaria Córdoba</title>
+    <link rel="stylesheet" href="css/Estilos.css">
+</head>
+<body>
+
+    <header>
+        <h1>Inmobiliaria Córdoba</h1>
+
+        <nav>
+            <a href="Indice.html">Inicio</a>
+            <a href="Indice.html#propiedades">Propiedades</a>
+            <a href="Inmobiliarias.html">Inmobiliarias</a>
+            <a href="Operaciones.html">Operaciones</a>
+            <a href="Reportes.html">Reportes</a>
+            <a href="Contacto.html">Contacto</a>
+            <a href="Login.html">Iniciar sesión</a>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Operaciones</h2>
+            <p class="rep-intro">
+                El ciclo de vida de una propiedad, de punta a punta. Cada acción ejecuta
+                un procedimiento almacenado y después te muestra qué hizo la base de datos
+                por su cuenta a través de los triggers.
+            </p>
+
+            <div class="op-grilla">
+
+                <!-- ============ 1. Publicar ============ -->
+                <article class="op-tarjeta">
+                    <h3>1. Publicar una propiedad</h3>
+                    <p class="rep-fuente">
+                        Procedimiento: <code>sp_CrearPublicacion</code>. Solo aparecen
+                        las propiedades <strong>Disponibles sin publicación activa</strong>.
+                    </p>
+
+                    <form id="form-publicar">
+                        <div class="crud-campo">
+                            <label for="pub-inmueble">Propiedad</label>
+                            <select id="pub-inmueble" required></select>
+                        </div>
+                        <div class="op-fila">
+                            <div class="crud-campo">
+                                <label for="pub-operacion-tipo">Operación</label>
+                                <select id="pub-operacion-tipo" required></select>
+                            </div>
+                            <div class="crud-campo">
+                                <label for="pub-moneda-nueva">Moneda</label>
+                                <select id="pub-moneda-nueva" required></select>
+                            </div>
+                        </div>
+                        <div class="crud-campo">
+                            <label for="pub-precio">Precio</label>
+                            <input type="number" id="pub-precio" min="0.01" step="0.01" required>
+                        </div>
+                        <button type="submit" class="crud-btn crud-btn-primario">Publicar</button>
+                    </form>
+
+                    <div class="op-resultado" id="resultado-publicar" hidden></div>
+                </article>
+
+                <!-- ============ 2. Concretar ============ -->
+                <article class="op-tarjeta op-destacada">
+                    <h3>2. Concretar la operación</h3>
+                    <p class="rep-fuente">
+                        Procedimiento: <code>sp_CrearContrato</code>. Al registrarse el
+                        contrato, <code>tr_Contrato_ActualizarDisponibilidad</code> cambia
+                        el estado del inmueble y da de baja la publicación, y
+                        <code>tr_Contrato_SinSolapamiento</code> impide contratos superpuestos.
+                    </p>
+
+                    <form id="form-concretar">
+                        <div class="crud-campo">
+                            <label for="con-publicacion">Publicación activa</label>
+                            <select id="con-publicacion" required></select>
+                            <small id="con-detalle" class="crud-ayuda"></small>
+                        </div>
+                        <div class="op-fila">
+                            <div class="crud-campo">
+                                <label for="con-cliente">Cliente</label>
+                                <select id="con-cliente" required></select>
+                            </div>
+                            <div class="crud-campo">
+                                <label for="con-agente">Agente</label>
+                                <select id="con-agente" required></select>
+                            </div>
+                        </div>
+                        <div class="op-fila">
+                            <div class="crud-campo">
+                                <label for="con-inicio">Fecha de inicio</label>
+                                <input type="date" id="con-inicio" required>
+                            </div>
+                            <div class="crud-campo">
+                                <label for="con-fin">Fecha de fin</label>
+                                <input type="date" id="con-fin">
+                                <small class="crud-ayuda">Dejala vacía si es una venta.</small>
+                            </div>
+                        </div>
+                        <div class="op-fila">
+                            <div class="crud-campo">
+                                <label for="con-monto">Monto acordado</label>
+                                <input type="number" id="con-monto" min="0.01" step="0.01" required>
+                            </div>
+                            <div class="crud-campo">
+                                <label for="con-comision">Comisión (%)</label>
+                                <input type="number" id="con-comision" min="0" max="100" step="0.01" value="3" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="crud-btn crud-btn-primario">Concretar operación</button>
+                    </form>
+
+                    <div class="op-resultado" id="resultado-concretar" hidden></div>
+                </article>
+
+                <!-- ============ 3. Facturar ============ -->
+                <article class="op-tarjeta">
+                    <h3>3. Emitir factura</h3>
+                    <p class="rep-fuente">
+                        Procedimiento: <code>sp_EmitirFactura</code>. Inserta la factura y
+                        su detalle dentro de una transacción, y
+                        <code>tr_DetalleFactura_CalcularSubtotal</code> recalcula el subtotal.
+                    </p>
+
+                    <form id="form-facturar">
+                        <div class="crud-campo">
+                            <label for="fac-contrato">Contrato</label>
+                            <select id="fac-contrato" required></select>
+                            <small id="fac-detalle" class="crud-ayuda"></small>
+                        </div>
+                        <div class="op-fila">
+                            <div class="crud-campo">
+                                <label for="fac-numero">Número de factura</label>
+                                <input type="text" id="fac-numero" maxlength="30" required>
+                            </div>
+                            <div class="crud-campo">
+                                <label for="fac-vencimiento">Vencimiento</label>
+                                <input type="date" id="fac-vencimiento">
+                            </div>
+                        </div>
+                        <div class="crud-campo">
+                            <label for="fac-concepto">Concepto</label>
+                            <input type="text" id="fac-concepto" maxlength="200" required>
+                        </div>
+                        <div class="op-fila">
+                            <div class="crud-campo">
+                                <label for="fac-cantidad">Cantidad</label>
+                                <input type="number" id="fac-cantidad" min="1" step="1" value="1" required>
+                            </div>
+                            <div class="crud-campo">
+                                <label for="fac-precio">Precio unitario</label>
+                                <input type="number" id="fac-precio" min="0" step="0.01" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="crud-btn crud-btn-primario">Emitir factura</button>
+                    </form>
+
+                    <div class="op-resultado" id="resultado-facturar" hidden></div>
+                </article>
+
+                <!-- ============ 4. Cambiar estado ============ -->
+                <article class="op-tarjeta">
+                    <h3>4. Cambiar estado de un inmueble</h3>
+                    <p class="rep-fuente">
+                        Procedimiento: <code>sp_CambiarEstadoInmueble</code>. Resuelve el
+                        estado por su descripción y rechaza cualquier valor que no exista
+                        en la tabla <code>EstadoInmueble</code>.
+                    </p>
+
+                    <form id="form-estado">
+                        <div class="crud-campo">
+                            <label for="est-inmueble">Inmueble</label>
+                            <select id="est-inmueble" required></select>
+                        </div>
+                        <div class="crud-campo">
+                            <label for="est-estado">Nuevo estado</label>
+                            <select id="est-estado" required></select>
+                        </div>
+                        <button type="submit" class="crud-btn crud-btn-primario">Cambiar estado</button>
+                    </form>
+
+                    <div class="op-resultado" id="resultado-estado" hidden></div>
+                </article>
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Inmobiliaria Córdoba</p>
+    </footer>
+
+    <script src="js/operaciones.js"></script>
+</body>
+</html>

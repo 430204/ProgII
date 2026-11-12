@@ -22,8 +22,24 @@ namespace InmoWeb.Repositories.Inmueble.Interfaz
 
         Task<int> SaveChangesAsync();
 
-        Task<List<VwPublicacionesActiva>>? GetPublicacionesActivas();
+        Task<List<VwPublicacionesActiva>> GetPublicacionesActivas(
+        string? operacion,
+        string? moneda,
+        decimal? precioMaximo);
 
-        
+        // ---- ABM de propiedades ----
+        // El alta crea propiedades Disponibles; la edicion es la que las pasa
+        // a Vendido, Alquilado o Reservado.
+        Task<List<InmuebleListaDto>> GetPropiedadesListadoAsync(string? texto, int? idEstado);
+        Task<bool> TieneContratosAsync(int idInmueble);
+        Task<bool> EliminarInmuebleAsync(int idInmueble);
+        Task<CatalogosInmuebleDto> GetCatalogosAsync();
+
+        // Resuelve el id del estado Disponible por descripcion, sin hardcodearlo
+        Task<int> GetIdEstadoDisponibleAsync();
+
+        // Al marcar una propiedad como no disponible hay que bajar sus publicaciones
+        // activas, si no seguiria apareciendo en el catalogo publico
+        Task<int> DarDeBajaPublicacionesActivasAsync(int idInmueble);
     }
 }

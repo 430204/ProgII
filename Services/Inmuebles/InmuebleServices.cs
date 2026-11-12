@@ -50,9 +50,41 @@ namespace InmoWeb.Services.Inmuebles
             return await repo.GetInmueblesInactivos();
         }
 
-        public async Task<List<VwPublicacionesActiva>>? GetPublicacionesActivas()
+        public async Task<List<VwPublicacionesActiva>> GetPublicacionesActivas(
+        string? operacion,
+        string? moneda,
+        decimal? precioMaximo)
         {
-            return await repo.GetPublicacionesActivas();
+            if (precioMaximo.HasValue)
+            {
+                if (precioMaximo.Value <= 0)
+                {
+                    throw new BusinesException(
+                        "El precio máximo debe ser mayor que cero.");
+                }
+
+                if (string.IsNullOrWhiteSpace(moneda))
+                {
+                    throw new BusinesException(
+                        "Seleccioná una moneda para filtrar por precio.");
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(moneda)
+                && moneda != "ARS" && moneda != "USD")
+            {
+                throw new BusinesException("La moneda debe ser ARS o USD.");
+            }
+
+            if (!string.IsNullOrWhiteSpace(operacion)
+                && operacion != "Venta" && operacion != "Alquiler")
+            {
+                throw new BusinesException(
+                    "La operación debe ser Venta o Alquiler.");
+            }
+
+            return await repo.GetPublicacionesActivas(
+                operacion, moneda, precioMaximo);
         }
 
         public async Task<InmuebleResponseDto?> UpdateAsync(int id, InmuebleUpdateDto dto)
@@ -68,6 +100,71 @@ namespace InmoWeb.Services.Inmuebles
         }
 
     
+
+        // ================= ABM de propiedades =================
+        // Ciclo de vida: el alta crea la propiedad Disponible, la edicion es la
+        // que la pasa a Vendido, Alquilado o Reservado.
+
+        public async Task<List<InmuebleListaDto>> GetPropiedadesAsync(string? texto, int? idEstado)
+        {
+            return await repo.GetPropiedadesListadoAsync(texto, idEstado);
+        }
+
+        public async Task<InmuebleResponseDto?> GetPropiedadByIdAsync(int id)
+        {
+            var inmueble = await repo.GetInmuebleById(id);
+            return inmueble is null ? null : MapToResponse(inmueble);
+        }
+
+        public async Task<InmuebleResponseDto> CreatePropiedadAsync(InmuebleCreateDto dto)
+        {
+            // Una propiedad nueva siempre nace Disponible: no tendria sentido dar de
+            // alta algo que ya esta vendido. El estado que venga del cliente se ignora.
+            dto.IdEstadoInmueble = await repo.GetIdEstadoDisponibleAsync();
+
+            return await CreateAsync(dto);
+        }
+
+        public async Task<InmuebleResponseDto?> UpdatePropiedadAsync(int id, InmuebleUpdateDto dto)
+        {
+            var actual = await repo.GetInmuebleById(id);
+            if (actual is null)
+                return null;
+
+            var idDisponible = await repo.GetIdEstadoDisponibleAsync();
+            var estabaDisponible = actual.IdEstadoInmueble == idDisponible;
+            var quedaDisponible = dto.IdEstadoInmueble == idDisponible;
+
+            var actualizado = await UpdateAsync(id, dto);
+
+            // Si la propiedad deja de estar Disponible, sus publicaciones activas
+            // tienen que bajarse. Si no, seguiria apareciendo en el catalogo publico,
+            // porque vw_PublicacionesActivas mira la publicacion y no el estado del inmueble.
+            if (actualizado is not null && estabaDisponible && !quedaDisponible)
+            {
+                await repo.DarDeBajaPublicacionesActivasAsync(id);
+            }
+
+            return actualizado;
+        }
+
+        public async Task<bool> DeletePropiedadAsync(int id)
+        {
+            var actual = await repo.GetInmuebleById(id);
+            if (actual is null)
+                return false;
+
+            if (await repo.TieneContratosAsync(id))
+                throw new BusinesException("No se puede eliminar: el inmueble tiene contratos asociados.");
+
+            return await repo.EliminarInmuebleAsync(id);
+        }
+
+        public async Task<CatalogosInmuebleDto> GetCatalogosAsync()
+        {
+            return await repo.GetCatalogosAsync();
+        }
+
 
     private async Task ValidarReglasAsync(InmuebleBaseDto dto, int? idExcluir)
         {

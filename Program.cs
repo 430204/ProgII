@@ -79,6 +79,21 @@ builder.Services.AddScoped<
     InmoWeb.Repositories.Persona.Interfaz.IPersonaRepository,
     InmoWeb.Repositories.Persona.PersonaRepository>();
 
+// Facturas y detalles de factura
+builder.Services.AddScoped<
+    InmoWeb.Repositories.Factura.Interfaz.IFacturaRepository,
+    InmoWeb.Repositories.Factura.FacturaRepository>();
+builder.Services.AddScoped<
+    InmoWeb.Services.Factura.Interfaces.IFacturaServices,
+    InmoWeb.Services.Factura.FacturaServices>();
+
+builder.Services.AddScoped<
+    InmoWeb.Repositories.DetalleFactura.Interfaz.IDetalleFacturaRepository,
+    InmoWeb.Repositories.DetalleFactura.DetalleFacturaRepository>();
+builder.Services.AddScoped<
+    InmoWeb.Services.DetalleFactura.Interfaces.IDetalleFacturaServices,
+    InmoWeb.Services.DetalleFactura.DetalleFacturaServices>();
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {

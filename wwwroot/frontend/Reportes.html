@@ -1,0 +1,298 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes - Inmobiliaria Córdoba</title>
+    <link rel="stylesheet" href="css/Estilos.css">
+</head>
+<body>
+
+    <header>
+        <h1>Inmobiliaria Córdoba</h1>
+
+        <nav>
+            <a href="Indice.html">Inicio</a>
+            <a href="Indice.html#propiedades">Propiedades</a>
+            <a href="Inmobiliarias.html">Inmobiliarias</a>
+            <a href="Operaciones.html">Operaciones</a>
+            <a href="Reportes.html">Reportes</a>
+            <a href="Contacto.html">Contacto</a>
+            <a href="Login.html">Iniciar sesión</a>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Reportes</h2>
+            <p class="rep-intro">
+                Cada reporte se arma con los filtros que cargás en pantalla y se resuelve
+                contra un objeto de la base de datos: un procedimiento almacenado, una
+                vista o una función.
+            </p>
+
+            <div class="rep-pestanias" role="tablist">
+                <button type="button" class="rep-pestania activa" data-reporte="busqueda">
+                    1. Inmuebles disponibles
+                </button>
+                <button type="button" class="rep-pestania" data-reporte="publicaciones">
+                    2. Publicaciones activas
+                </button>
+                <button type="button" class="rep-pestania" data-reporte="contratos">
+                    3. Contratos y comisiones
+                </button>
+                <button type="button" class="rep-pestania" data-reporte="facturacion">
+                    4. Facturación por período
+                </button>
+                <button type="button" class="rep-pestania" data-reporte="resumen">
+                    5. Resumen por ciudad y tipo
+                </button>
+            </div>
+
+            <!-- ============ 1. Busqueda de inmuebles disponibles ============ -->
+            <div class="rep-panel" id="panel-busqueda">
+                <h3>Inmuebles disponibles</h3>
+                <p class="rep-fuente">
+                    Fuente: <code>sp_BuscarInmuebles</code>, que consulta la función de tabla
+                    <code>fn_InmueblesDisponibles</code>. Filtros de correspondencia por operación,
+                    tipo y ciudad, y de rango por precio.
+                </p>
+
+                <form class="crud-filtros" id="form-busqueda">
+                    <div class="crud-campo">
+                        <label for="busqueda-operacion">Operación</label>
+                        <select id="busqueda-operacion"><option value="">Todas</option></select>
+                    </div>
+                    <div class="crud-campo">
+                        <label for="busqueda-tipo">Tipo de inmueble</label>
+                        <select id="busqueda-tipo"><option value="">Todos</option></select>
+                    </div>
+                    <div class="crud-campo">
+                        <label for="busqueda-ciudad">Ciudad</label>
+                        <select id="busqueda-ciudad"><option value="">Todas</option></select>
+                    </div>
+                    <div class="crud-campo">
+                        <label for="busqueda-precio-min">Precio desde</label>
+                        <input type="number" id="busqueda-precio-min" min="0" step="0.01" placeholder="Sin mínimo">
+                    </div>
+                    <div class="crud-campo">
+                        <label for="busqueda-precio-max">Precio hasta</label>
+                        <input type="number" id="busqueda-precio-max" min="0" step="0.01" placeholder="Sin máximo">
+                    </div>
+                    <button type="submit" class="crud-btn crud-btn-primario">Generar reporte</button>
+                    <button type="reset" class="crud-btn">Limpiar</button>
+                </form>
+
+                <p class="crud-mensaje" id="mensaje-busqueda" role="status" aria-live="polite" hidden></p>
+                <div class="rep-totales" id="totales-busqueda"></div>
+
+                <div class="contenedor-tabla">
+                    <table class="tabla-resultados" id="tabla-busqueda">
+                        <thead>
+                            <tr>
+                                <th>Código</th><th>Propiedad</th><th>Tipo</th>
+                                <th>Operación</th><th>Ciudad</th><th>Dirección</th>
+                                <th>Moneda</th><th class="rep-der">Precio</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ============ 2. Publicaciones activas ============ -->
+            <div class="rep-panel" id="panel-publicaciones" hidden>
+                <h3>Publicaciones activas</h3>
+                <p class="rep-fuente">
+                    Fuente: vista <code>vw_PublicacionesActivas</code>. Incluye filtro de tiempo
+                    por rango de fecha de publicación.
+                </p>
+
+                <form class="crud-filtros" id="form-publicaciones">
+                    <div class="crud-campo">
+                        <label for="pub-desde">Publicadas desde</label>
+                        <input type="date" id="pub-desde">
+                    </div>
+                    <div class="crud-campo">
+                        <label for="pub-hasta">Publicadas hasta</label>
+                        <input type="date" id="pub-hasta">
+                    </div>
+                    <div class="crud-campo">
+                        <label for="pub-operacion">Operación</label>
+                        <select id="pub-operacion"><option value="">Todas</option></select>
+                    </div>
+                    <div class="crud-campo">
+                        <label for="pub-tipo">Tipo de inmueble</label>
+                        <select id="pub-tipo"><option value="">Todos</option></select>
+                    </div>
+                    <div class="crud-campo">
+                        <label for="pub-ciudad">Ciudad</label>
+                        <select id="pub-ciudad"><option value="">Todas</option></select>
+                    </div>
+                    <div class="crud-campo">
+                        <label for="pub-moneda">Moneda</label>
+                        <select id="pub-moneda"><option value="">Todas</option></select>
+                    </div>
+                    <div class="crud-campo">
+                        <label for="pub-precio-max">Precio hasta</label>
+                        <input type="number" id="pub-precio-max" min="0" step="0.01" placeholder="Sin máximo">
+                    </div>
+                    <button type="submit" class="crud-btn crud-btn-primario">Generar reporte</button>
+                    <button type="reset" class="crud-btn">Limpiar</button>
+                </form>
+
+                <p class="crud-mensaje" id="mensaje-publicaciones" role="status" aria-live="polite" hidden></p>
+                <div class="rep-totales" id="totales-publicaciones"></div>
+
+                <div class="contenedor-tabla">
+                    <table class="tabla-resultados" id="tabla-publicaciones">
+                        <thead>
+                            <tr>
+                                <th>Código</th><th>Propiedad</th><th>Tipo</th>
+                                <th>Operación</th><th>Ciudad</th><th>Publicada</th>
+                                <th>Moneda</th><th class="rep-der">Precio</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ============ 3. Contratos y comisiones ============ -->
+            <div class="rep-panel" id="panel-contratos" hidden>
+                <h3>Contratos y comisiones</h3>
+                <p class="rep-fuente">
+                    Fuente: vista <code>vw_ContratosDetalle</code>. La columna de comisión
+                    la calcula la función escalar <code>fn_ComisionContrato</code>.
+                </p>
+
+                <form class="crud-filtros" id="form-contratos">
+                    <div class="crud-campo">
+                        <label for="con-desde">Inicio desde</label>
+                        <input type="date" id="con-desde">
+                    </div>
+                    <div class="crud-campo">
+                        <label for="con-hasta">Inicio hasta</label>
+                        <input type="date" id="con-hasta">
+                    </div>
+                    <div class="crud-campo">
+                        <label for="con-operacion">Operación</label>
+                        <select id="con-operacion"><option value="">Todas</option></select>
+                    </div>
+                    <div class="crud-campo">
+                        <label for="con-estado">Estado</label>
+                        <select id="con-estado"><option value="">Todos</option></select>
+                    </div>
+                    <button type="submit" class="crud-btn crud-btn-primario">Generar reporte</button>
+                    <button type="reset" class="crud-btn">Limpiar</button>
+                </form>
+
+                <p class="crud-mensaje" id="mensaje-contratos" role="status" aria-live="polite" hidden></p>
+                <div class="rep-totales" id="totales-contratos"></div>
+
+                <div class="contenedor-tabla">
+                    <table class="tabla-resultados" id="tabla-contratos">
+                        <thead>
+                            <tr>
+                                <th>Código</th><th>Propiedad</th><th>Operación</th>
+                                <th>Cliente</th><th>Agente</th><th>Inicio</th><th>Fin</th>
+                                <th>Moneda</th><th class="rep-der">Monto</th>
+                                <th class="rep-der">%</th><th class="rep-der">Comisión</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ============ 4. Facturacion por periodo ============ -->
+            <div class="rep-panel" id="panel-facturacion" hidden>
+                <h3>Facturación por período</h3>
+                <p class="rep-fuente">
+                    Fuente: vista <code>vw_FacturasTotales</code>, que agrupa los detalles
+                    de cada factura con <code>SUM</code>.
+                </p>
+
+                <form class="crud-filtros" id="form-facturacion">
+                    <div class="crud-campo">
+                        <label for="fac-desde">Emitidas desde</label>
+                        <input type="date" id="fac-desde">
+                    </div>
+                    <div class="crud-campo">
+                        <label for="fac-hasta">Emitidas hasta</label>
+                        <input type="date" id="fac-hasta">
+                    </div>
+                    <div class="crud-campo">
+                        <label for="fac-estado">Estado</label>
+                        <select id="fac-estado"><option value="">Todos</option></select>
+                    </div>
+                    <button type="submit" class="crud-btn crud-btn-primario">Generar reporte</button>
+                    <button type="reset" class="crud-btn">Limpiar</button>
+                </form>
+
+                <p class="crud-mensaje" id="mensaje-facturacion" role="status" aria-live="polite" hidden></p>
+                <div class="rep-totales" id="totales-facturacion"></div>
+
+                <div class="contenedor-tabla">
+                    <table class="tabla-resultados" id="tabla-facturacion">
+                        <thead>
+                            <tr>
+                                <th>Factura</th><th>Propiedad</th><th>Cliente</th>
+                                <th>Emisión</th><th>Vencimiento</th><th>Estado</th>
+                                <th>Moneda</th><th class="rep-der">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ============ 5. Resumen por ciudad y tipo ============ -->
+            <div class="rep-panel" id="panel-resumen" hidden>
+                <h3>Resumen por ciudad y tipo</h3>
+                <p class="rep-fuente">
+                    Fuente: vista <code>vw_ResumenInmobiliaria</code>, consulta agrupada
+                    con <code>COUNT</code> y <code>SUM</code> sobre ciudad y tipo de inmueble.
+                </p>
+
+                <form class="crud-filtros" id="form-resumen">
+                    <div class="crud-campo">
+                        <label for="res-ciudad">Ciudad</label>
+                        <select id="res-ciudad"><option value="">Todas</option></select>
+                    </div>
+                    <div class="crud-campo">
+                        <label for="res-tipo">Tipo de inmueble</label>
+                        <select id="res-tipo"><option value="">Todos</option></select>
+                    </div>
+                    <button type="submit" class="crud-btn crud-btn-primario">Generar reporte</button>
+                    <button type="reset" class="crud-btn">Limpiar</button>
+                </form>
+
+                <p class="crud-mensaje" id="mensaje-resumen" role="status" aria-live="polite" hidden></p>
+                <div class="rep-totales" id="totales-resumen"></div>
+
+                <div class="contenedor-tabla">
+                    <table class="tabla-resultados" id="tabla-resumen">
+                        <thead>
+                            <tr>
+                                <th>Ciudad</th><th>Tipo de inmueble</th>
+                                <th class="rep-der">Inmuebles</th>
+                                <th class="rep-der">Disponibles</th>
+                                <th class="rep-der">No disponibles</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Inmobiliaria Córdoba</p>
+    </footer>
+
+    <script src="js/reportes.js"></script>
+</body>
+</html>

@@ -4,17 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar sesión - Inmobiliaria Córdoba</title>
+    <title>Iniciar sesión - InmoWeb</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%2317324d'/%3E%3Cpath d='M5 10.5l7-5.5 7 5.5v8.5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 19v-8.5z' fill='none' stroke='%23e9bc70' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpolyline points='9.5 20.5 9.5 13 14.5 13 14.5 20.5' fill='none' stroke='%23e9bc70' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
     <link rel="stylesheet" href="css/Estilos.css">
 </head>
 <body>
 
     <header>
-        <h1>Inmobiliaria Córdoba</h1>
+        <a href="Indice.html" class="logo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <h1>InmoWeb</h1>
+        </a>
 
         <nav>
             <a href="Indice.html">Inicio</a>
-            <a href="Indice.html#propiedades">Propiedades</a>
             <a href="Inmobiliarias.html">Inmobiliarias</a>
             <a href="Operaciones.html">Operaciones</a>
             <a href="Reportes.html">Reportes</a>
@@ -38,7 +44,7 @@
                        required>
 
                 <label for="dni">DNI</label>
-                <input type="text"
+                <input type="password"
                        id="dni"
                        placeholder="Ingresá tu DNI"
                        inputmode="numeric"
@@ -52,7 +58,41 @@
     </main>
 
     <footer>
-        <p>Inmobiliaria Córdoba</p>
+        <div class="footer-contenido">
+            <div class="footer-col">
+
+                <h3>InmoWeb</h3>
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+            </div>
+
+            <div class="footer-col">
+                <h4>Explorar</h4>
+                <ul>
+                    <li><a href="Indice.html#propiedades">Propiedades destacadas</a></li>
+                    <li><a href="Inmobiliarias.html">Inmobiliarias asociadas</a></li>
+                    <li><a href="Operaciones.html">Tipos de operaciones</a></li>
+                    <li><a href="Reportes.html">Reportes del mercado</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <p>📍 UTN FRC</p>
+                <p>📞 +54 351 123-4567</p>
+                <p>✉️ contacto@inmoweb.com</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 InmoWeb - Todos los derechos reservados.</p>
+            <div class="legales">
+                <a href="#">Términos y condiciones</a> |
+                <a href="#">Política de privacidad</a>
+            </div>
+        </div>
     </footer>
     <script src="js/login.js"></script>
 </body>

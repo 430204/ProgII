@@ -3,17 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reportes - Inmobiliaria Córdoba</title>
+    <title>Reportes - InmoWeb</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%2317324d'/%3E%3Cpath d='M5 10.5l7-5.5 7 5.5v8.5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 19v-8.5z' fill='none' stroke='%23e9bc70' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpolyline points='9.5 20.5 9.5 13 14.5 13 14.5 20.5' fill='none' stroke='%23e9bc70' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
     <link rel="stylesheet" href="css/Estilos.css">
 </head>
 <body>
 
     <header>
-        <h1>Inmobiliaria Córdoba</h1>
+        <a href="Indice.html" class="logo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <h1>InmoWeb</h1>
+        </a>
 
         <nav>
             <a href="Indice.html">Inicio</a>
-            <a href="Indice.html#propiedades">Propiedades</a>
             <a href="Inmobiliarias.html">Inmobiliarias</a>
             <a href="Operaciones.html">Operaciones</a>
             <a href="Reportes.html">Reportes</a>
@@ -25,11 +31,6 @@
     <main>
         <section>
             <h2>Reportes</h2>
-            <p class="rep-intro">
-                Cada reporte se arma con los filtros que cargás en pantalla y se resuelve
-                contra un objeto de la base de datos: un procedimiento almacenado, una
-                vista o una función.
-            </p>
 
             <div class="rep-pestanias" role="tablist">
                 <button type="button" class="rep-pestania activa" data-reporte="busqueda">
@@ -52,11 +53,6 @@
             <!-- ============ 1. Busqueda de inmuebles disponibles ============ -->
             <div class="rep-panel" id="panel-busqueda">
                 <h3>Inmuebles disponibles</h3>
-                <p class="rep-fuente">
-                    Fuente: <code>sp_BuscarInmuebles</code>, que consulta la función de tabla
-                    <code>fn_InmueblesDisponibles</code>. Filtros de correspondencia por operación,
-                    tipo y ciudad, y de rango por precio.
-                </p>
 
                 <form class="crud-filtros" id="form-busqueda">
                     <div class="crud-campo">
@@ -103,10 +99,6 @@
             <!-- ============ 2. Publicaciones activas ============ -->
             <div class="rep-panel" id="panel-publicaciones" hidden>
                 <h3>Publicaciones activas</h3>
-                <p class="rep-fuente">
-                    Fuente: vista <code>vw_PublicacionesActivas</code>. Incluye filtro de tiempo
-                    por rango de fecha de publicación.
-                </p>
 
                 <form class="crud-filtros" id="form-publicaciones">
                     <div class="crud-campo">
@@ -161,10 +153,6 @@
             <!-- ============ 3. Contratos y comisiones ============ -->
             <div class="rep-panel" id="panel-contratos" hidden>
                 <h3>Contratos y comisiones</h3>
-                <p class="rep-fuente">
-                    Fuente: vista <code>vw_ContratosDetalle</code>. La columna de comisión
-                    la calcula la función escalar <code>fn_ComisionContrato</code>.
-                </p>
 
                 <form class="crud-filtros" id="form-contratos">
                     <div class="crud-campo">
@@ -209,10 +197,6 @@
             <!-- ============ 4. Facturacion por periodo ============ -->
             <div class="rep-panel" id="panel-facturacion" hidden>
                 <h3>Facturación por período</h3>
-                <p class="rep-fuente">
-                    Fuente: vista <code>vw_FacturasTotales</code>, que agrupa los detalles
-                    de cada factura con <code>SUM</code>.
-                </p>
 
                 <form class="crud-filtros" id="form-facturacion">
                     <div class="crud-campo">
@@ -251,10 +235,6 @@
             <!-- ============ 5. Resumen por ciudad y tipo ============ -->
             <div class="rep-panel" id="panel-resumen" hidden>
                 <h3>Resumen por ciudad y tipo</h3>
-                <p class="rep-fuente">
-                    Fuente: vista <code>vw_ResumenInmobiliaria</code>, consulta agrupada
-                    con <code>COUNT</code> y <code>SUM</code> sobre ciudad y tipo de inmueble.
-                </p>
 
                 <form class="crud-filtros" id="form-resumen">
                     <div class="crud-campo">
@@ -290,7 +270,41 @@
     </main>
 
     <footer>
-        <p>Inmobiliaria Córdoba</p>
+        <div class="footer-contenido">
+            <div class="footer-col">
+
+                <h3>InmoWeb</h3>
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+            </div>
+
+            <div class="footer-col">
+                <h4>Explorar</h4>
+                <ul>
+                    <li><a href="Indice.html#propiedades">Propiedades destacadas</a></li>
+                    <li><a href="Inmobiliarias.html">Inmobiliarias asociadas</a></li>
+                    <li><a href="Operaciones.html">Tipos de operaciones</a></li>
+                    <li><a href="Reportes.html">Reportes del mercado</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <p>📍 UTN FRC</p>
+                <p>📞 +54 351 123-4567</p>
+                <p>✉️ contacto@inmoweb.com</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 InmoWeb - Todos los derechos reservados.</p>
+            <div class="legales">
+                <a href="#">Términos y condiciones</a> |
+                <a href="#">Política de privacidad</a>
+            </div>
+        </div>
     </footer>
 
     <script src="js/reportes.js"></script>

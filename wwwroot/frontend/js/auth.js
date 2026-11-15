@@ -6,7 +6,9 @@
     // Rutas que NO requieren estar logueado
     const rutasPublicas = [
         "/frontend/Login.html",
-        "/Login.html"
+        "/Login.html",
+        "/frontend/Inicio.html",
+        "/Inicio.html"
     ];
 
     const rutaActual = window.location.pathname;

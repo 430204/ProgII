@@ -115,7 +115,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 // La raíz del sitio abre directamente el front, no Swagger.
-app.MapGet("/", () => Results.Redirect("/frontend/Login.html"))
+app.MapGet("/", () => Results.Redirect("/frontend/Inicio.html"))
     .ExcludeFromDescription();
 
 app.Run();

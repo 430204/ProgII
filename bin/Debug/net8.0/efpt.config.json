@@ -1,0 +1,174 @@
+﻿{
+   "CodeGenerationMode": 4,
+   "ContextClassName": "InmobiliariaDBContext",
+   "ContextNamespace": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "IrregularWords": null,
+   "MinimumProductVersion": "2.6.1706",
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Models",
+   "PluralRules": null,
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "InmoWeb",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 2,
+   "SelectedToBeGenerated": 0,
+   "SingularRules": null,
+   "T4TemplatePath": null,
+   "Tables": [
+      {
+         "Name": "[dbo].[Ciudad]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Contrato]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[DetalleFactura]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Direccion]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[EstadoInmueble]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Factura]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Inmobiliaria]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Inmueble]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Pais]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Persona]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PersonaTipo]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PropietarioInmueble]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Provincia]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Publicacion]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[TipoInmueble]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[TipoOperacion]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[TipoPersona]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[vw_ContratosDetalle]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[vw_FacturasTotales]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[vw_InmueblesCatalogo]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[vw_PropietariosPorInmueble]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[vw_PublicacionesActivas]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[vw_ResumenInmobiliaria]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[sp_BuscarInmuebles]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[sp_CambiarEstadoInmueble]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[sp_CrearContrato]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[sp_CrearPublicacion]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[sp_DarDeBajaPublicacion]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[sp_EmitirFactura]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[fn_ComisionContrato]",
+         "ObjectType": 2
+      },
+      {
+         "Name": "[dbo].[fn_InmueblesDisponibles]",
+         "ObjectType": 2
+      }
+   ],
+   "UiHint": null,
+   "UncountableWords": null,
+   "UseAsyncStoredProcedureCalls": true,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDatabaseNamesForRoutines": true,
+   "UseDateOnlyTimeOnly": true,
+   "UseDbContextSplitting": false,
+   "UseDecimalDataAnnotationForSprocResult": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": true,
+   "UseInternalAccessModifiersForSprocsAndFunctions": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UsePrefixNavigationNaming": false,
+   "UseSchemaFolders": false,
+   "UseSchemaNamespaces": false,
+   "UseSpatial": false,
+   "UseT4": false,
+   "UseT4Split": false,
+   "UseTypedTvpParameters": true
+}

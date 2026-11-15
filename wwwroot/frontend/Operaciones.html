@@ -33,6 +33,34 @@
     <main>
         <section>
             <h2>Operaciones</h2>
+            <!-- ============ DOLAR ============ -->
+            <section class="dolar-card">
+                <div class="dolar-header">
+                    <div>
+                        <h2>Dólar Blue</h2>
+                        <span class="dolar-subtitle">Cotización actual</span>
+                    </div>
+
+                    <span class="dolar-badge">USD</span>
+                </div>
+
+                <div class="dolar-values">
+                    <div class="dolar-item">
+                        <span>Compra</span>
+                        <strong id="dolar-compra">--</strong>
+                    </div>
+
+                    <div class="dolar-item">
+                        <span>Venta</span>
+                        <strong id="dolar-venta">--</strong>
+                    </div>
+                </div>
+
+                <div class="dolar-footer">
+                    <span id="dolar-estado">Consultando cotización...</span>
+                    <span id="dolar-fecha"></span>
+                </div>
+            </section>
 
             <div class="op-grilla">
 
@@ -213,6 +241,7 @@
         </div>
     </footer>
 
+    <script src="js/dolar.js"></script>
     <script src="js/operaciones.js"></script>
 </body>
 </html>

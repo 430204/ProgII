@@ -1407,10 +1407,119 @@ footer {
         background-color: #b02a37;
     }
 
-    /* Botones deshabilitados */
     .btn-editar:disabled,
     .btn-eliminar:disabled {
         opacity: 0.6;
         cursor: not-allowed;
     }
+/* ============ COTIZACIÓN DÓLAR ============ */
 
+section.dolar-card {
+    display: block;
+    width: 100%;
+    max-width: 480px;
+    margin: 40px auto !important;
+    padding: 28px !important;
+    background-color: #eff9f0 !important;
+    border: 1px solid #d5ead8;
+    border-radius: 18px;
+    box-shadow: 0 6px 20px rgba(31, 80, 48, 0.10);
+    box-sizing: border-box;
+}
+
+    /* Encabezado */
+
+    section.dolar-card .dolar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+
+        section.dolar-card .dolar-header h2 {
+            margin: 0 0 5px !important;
+            color: #17324d;
+            font-size: 23px;
+            font-weight: 700;
+        }
+
+    section.dolar-card .dolar-subtitle {
+        color: #66816b;
+        font-size: 14px;
+    }
+
+    /* Etiqueta USD */
+
+    section.dolar-card .dolar-badge {
+        background-color: #d8efdc;
+        color: #276738;
+        padding: 8px 14px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1px;
+    }
+
+    /* Precios */
+
+    section.dolar-card .dolar-values {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 15px;
+    }
+
+    section.dolar-card .dolar-item {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 20px 16px;
+        background-color: #ffffff;
+        border: 1px solid #e0eee2;
+        border-radius: 13px;
+        min-width: 0;
+        transition: transform 0.2s ease;
+    }
+
+        section.dolar-card .dolar-item:hover {
+            transform: translateY(-3px);
+        }
+
+        section.dolar-card .dolar-item span {
+            color: #64816a;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        section.dolar-card .dolar-item strong {
+            color: #236b3b;
+            font-size: 23px;
+            font-weight: 700;
+        }
+
+    /* Pie de tarjeta */
+
+    section.dolar-card .dolar-footer {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+        margin-top: 22px;
+        padding-top: 15px;
+        border-top: 1px solid #d5ead8;
+        color: #66816b;
+        font-size: 12px;
+    }
+
+
+@media (max-width: 480px) {
+    section.dolar-card {
+        padding: 20px !important;
+    }
+
+        section.dolar-card .dolar-item {
+            padding: 15px 10px;
+        }
+
+            section.dolar-card .dolar-item strong {
+                font-size: 19px;
+            }
+}

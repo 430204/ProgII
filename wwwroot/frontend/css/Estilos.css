@@ -947,6 +947,203 @@ footer {
         grid-template-columns: repeat(2, 1fr);
     }
 }
+/* ===================== SOBRE NOSOTROS ===================== */
+
+.sobre-nosotros {
+    max-width: 1100px;
+}
+
+.sobre-intro {
+    padding: 56px 48px;
+    margin-bottom: 48px;
+    text-align: center;
+    background: linear-gradient(135deg, #e3edf5, #f3f6f9);
+    border: 1px solid #d8e2eb;
+    border-radius: 16px;
+}
+
+.sobre-etiqueta {
+    display: inline-block;
+    margin-bottom: 12px;
+    color: #8a621e;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+}
+
+.sobre-intro h2 {
+    max-width: 760px;
+    margin: 0 auto 16px;
+    color: #17324d;
+    font-size: clamp(28px, 4vw, 40px);
+    line-height: 1.2;
+}
+
+.sobre-intro p {
+    max-width: 720px;
+    margin: 0 auto;
+    color: #4a5561;
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+.sobre-proyecto {
+    margin-bottom: 56px;
+}
+
+    .sobre-proyecto > h2,
+    .sobre-equipo-encabezado h2 {
+        color: #17324d;
+        font-size: 28px;
+        margin-bottom: 22px;
+    }
+
+.sobre-problemas {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.sobre-bloque {
+    display: flex;
+    gap: 18px;
+    padding: 25px;
+    background-color: #fff;
+    border: 1px solid #e0e5eb;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(23, 50, 77, 0.06);
+}
+
+.sobre-numero {
+    flex: 0 0 42px;
+    color: #bd8b36;
+    font-size: 21px;
+    font-weight: bold;
+}
+
+.sobre-bloque h3 {
+    margin-bottom: 12px;
+    color: #17324d;
+    font-size: 19px;
+}
+
+.sobre-bloque p {
+    margin-bottom: 12px;
+    color: #4a5561;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+    .sobre-bloque p:last-child {
+        margin-bottom: 0;
+    }
+
+.sobre-equipo-encabezado {
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+    .sobre-equipo-encabezado h2 {
+        margin-bottom: 8px;
+    }
+
+    .sobre-equipo-encabezado p {
+        color: #5a6673;
+        line-height: 1.5;
+    }
+
+.equipo-grilla {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.equipo-tarjeta {
+    overflow: hidden;
+    background-color: #fff;
+    border: 1px solid #e0e5eb;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(23, 50, 77, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .equipo-tarjeta:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(23, 50, 77, 0.13);
+    }
+
+    .equipo-tarjeta img {
+        display: block;
+        width: 100%;
+        height: 240px;
+        object-fit: cover;
+        object-position: center;
+        background-color: #e3edf5;
+    }
+
+.equipo-datos {
+    padding: 18px 20px 20px;
+}
+
+    .equipo-datos h3 {
+        margin-bottom: 10px;
+        color: #17324d;
+        font-size: 19px;
+    }
+
+    .equipo-datos p {
+        color: #4a5561;
+        font-size: 14px;
+    }
+
+        .equipo-datos p span {
+            margin-right: 6px;
+            color: #6b7785;
+        }
+
+@media (max-width: 800px) {
+    .sobre-problemas {
+        grid-template-columns: 1fr;
+    }
+
+    .equipo-grilla {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 550px) {
+    .sobre-intro {
+        padding: 38px 22px;
+    }
+
+        .sobre-intro p {
+            font-size: 15px;
+        }
+
+    .sobre-proyecto > h2,
+    .sobre-equipo-encabezado h2 {
+        font-size: 24px;
+    }
+
+    .sobre-bloque {
+        padding: 20px 16px;
+        gap: 12px;
+    }
+
+    .sobre-numero {
+        flex-basis: 34px;
+        font-size: 18px;
+    }
+
+    .equipo-grilla {
+        grid-template-columns: 1fr;
+    }
+
+    .equipo-tarjeta img {
+        height: 280px;
+    }
+}
 
 /* ===================== PANTALLA DE OPERACIONES ===================== */
 

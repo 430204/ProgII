@@ -1,6 +1,7 @@
 ﻿
 (function () {
-    const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+    const token = sessionStorage.getItem("inmoweb_token") ||
+        localStorage.getItem("inmoweb_token");
 
     // Rutas que NO requieren estar logueado
     const rutasPublicas = [

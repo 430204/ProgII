@@ -1,0 +1,314 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes - InmoWeb</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%2317324d'/%3E%3Cpath d='M5 10.5l7-5.5 7 5.5v8.5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 19v-8.5z' fill='none' stroke='%23e9bc70' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpolyline points='9.5 20.5 9.5 13 14.5 13 14.5 20.5' fill='none' stroke='%23e9bc70' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="css/Estilos.css">
+    <script src="js/auth.js"></script>
+</head>
+<body>
+
+    <header>
+        <a href="Indice.html" class="logo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <h1>InmoWeb</h1>
+        </a>
+
+        <nav>
+            <a href="Indice.html">Inicio</a>
+            <a href="Inmobiliarias.html">Inmobiliarias</a>
+            <a href="Operaciones.html">Operaciones</a>
+            <a href="Reportes.html">Reportes</a>
+            <a href="Contacto.html">Contacto</a>
+            <a href="SobreNosotros.html">Sobre Nosotros</a>
+            <a href="Login.html">Iniciar sesión</a>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Reportes</h2>
+
+            <div class="rep-pestanias" role="tablist">
+                <button type="button" class="rep-pestania activa" data-reporte="busqueda">
+                    1. Inmuebles disponibles
+                </button>
+                <button type="button" class="rep-pestania" data-reporte="publicaciones">
+                    2. Publicaciones activas
+                </button>
+                <button type="button" class="rep-pestania" data-reporte="contratos">
+                    3. Contratos y comisiones
+                </button>
+                <button type="button" class="rep-pestania" data-reporte="facturacion">
+                    4. Facturación por período
+                </button>
+                <button type="button" class="rep-pestania" data-reporte="resumen">
+                    5. Resumen por ciudad y tipo
+                </button>
+            </div>
+
+            <!-- ============ 1. Busqueda de inmuebles disponibles ============ -->
+            <div class="rep-panel" id="panel-busqueda">
+                <h3>Inmuebles disponibles</h3>
+
+                <form class="crud-filtros" id="form-busqueda">
+                    <div class="crud-campo">
+                        <label for="busqueda-operacion">Operación</label>
+                        <select id="busqueda-operacion"><option value="">Todas</option></select>
+                    </div>
+                    <div class="crud-campo">
+                        <label for="busqueda-tipo">Tipo de inmueble</label>
+                        <select id="busqueda-tipo"><option value="">Todos</option></select>
+                    </div>
+                    <div class="crud-campo">
+                        <label for="busqueda-ciudad">Ciudad</label>
+                        <select id="busqueda-ciudad"><option value="">Todas</option></select>
+                    </div>
+                    <div class="crud-campo">
+                        <label for="busqueda-precio-min">Precio desde</label>
+                        <input type="number" id="busqueda-precio-min" min="0" step="0.01" placeholder="Sin mínimo">
+                    </div>
+                    <div class="crud-campo">
+                        <label for="busqueda-precio-max">Precio hasta</label>
+                        <input type="number" id="busqueda-precio-max" min="0" step="0.01" placeholder="Sin máximo">
+                    </div>
+                    <button type="submit" class="crud-btn crud-btn-primario">Generar reporte</button>
+                    <button type="reset" class="crud-btn">Limpiar</button>
+                </form>
+
+                <p class="crud-mensaje" id="mensaje-busqueda" role="status" aria-live="polite" hidden></p>
+                <div class="rep-totales" id="totales-busqueda"></div>
+
+                <div class="contenedor-tabla">
+                    <table class="tabla-resultados" id="tabla-busqueda">
+                        <thead>
+                            <tr>
+                                <th>Código</th><th>Propiedad</th><th>Tipo</th>
+                                <th>Operación</th><th>Ciudad</th><th>Dirección</th>
+                                <th>Moneda</th><th class="rep-der">Precio</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ============ 2. Publicaciones activas ============ -->
+            <div class="rep-panel" id="panel-publicaciones" hidden>
+                <h3>Publicaciones activas</h3>
+
+                <form class="crud-filtros" id="form-publicaciones">
+                    <div class="crud-campo">
+                        <label for="pub-desde">Publicadas desde</label>
+                        <input type="date" id="pub-desde">
+                    </div>
+                    <div class="crud-campo">
+                        <label for="pub-hasta">Publicadas hasta</label>
+                        <input type="date" id="pub-hasta">
+                    </div>
+                    <div class="crud-campo">
+                        <label for="pub-operacion">Operación</label>
+                        <select id="pub-operacion"><option value="">Todas</option></select>
+                    </div>
+                    <div class="crud-campo">
+                        <label for="pub-tipo">Tipo de inmueble</label>
+                        <select id="pub-tipo"><option value="">Todos</option></select>
+                    </div>
+                    <div class="crud-campo">
+                        <label for="pub-ciudad">Ciudad</label>
+                        <select id="pub-ciudad"><option value="">Todas</option></select>
+                    </div>
+                    <div class="crud-campo">
+                        <label for="pub-moneda">Moneda</label>
+                        <select id="pub-moneda"><option value="">Todas</option></select>
+                    </div>
+                    <div class="crud-campo">
+                        <label for="pub-precio-max">Precio hasta</label>
+                        <input type="number" id="pub-precio-max" min="0" step="0.01" placeholder="Sin máximo">
+                    </div>
+                    <button type="submit" class="crud-btn crud-btn-primario">Generar reporte</button>
+                    <button type="reset" class="crud-btn">Limpiar</button>
+                </form>
+
+                <p class="crud-mensaje" id="mensaje-publicaciones" role="status" aria-live="polite" hidden></p>
+                <div class="rep-totales" id="totales-publicaciones"></div>
+
+                <div class="contenedor-tabla">
+                    <table class="tabla-resultados" id="tabla-publicaciones">
+                        <thead>
+                            <tr>
+                                <th>Código</th><th>Propiedad</th><th>Tipo</th>
+                                <th>Operación</th><th>Ciudad</th><th>Publicada</th>
+                                <th>Moneda</th><th class="rep-der">Precio</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ============ 3. Contratos y comisiones ============ -->
+            <div class="rep-panel" id="panel-contratos" hidden>
+                <h3>Contratos y comisiones</h3>
+
+                <form class="crud-filtros" id="form-contratos">
+                    <div class="crud-campo">
+                        <label for="con-desde">Inicio desde</label>
+                        <input type="date" id="con-desde">
+                    </div>
+                    <div class="crud-campo">
+                        <label for="con-hasta">Inicio hasta</label>
+                        <input type="date" id="con-hasta">
+                    </div>
+                    <div class="crud-campo">
+                        <label for="con-operacion">Operación</label>
+                        <select id="con-operacion"><option value="">Todas</option></select>
+                    </div>
+                    <div class="crud-campo">
+                        <label for="con-estado">Estado</label>
+                        <select id="con-estado"><option value="">Todos</option></select>
+                    </div>
+                    <button type="submit" class="crud-btn crud-btn-primario">Generar reporte</button>
+                    <button type="reset" class="crud-btn">Limpiar</button>
+                </form>
+
+                <p class="crud-mensaje" id="mensaje-contratos" role="status" aria-live="polite" hidden></p>
+                <div class="rep-totales" id="totales-contratos"></div>
+
+                <div class="contenedor-tabla">
+                    <table class="tabla-resultados" id="tabla-contratos">
+                        <thead>
+                            <tr>
+                                <th>Código</th><th>Propiedad</th><th>Operación</th>
+                                <th>Cliente</th><th>Agente</th><th>Inicio</th><th>Fin</th>
+                                <th>Moneda</th><th class="rep-der">Monto</th>
+                                <th class="rep-der">%</th><th class="rep-der">Comisión</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ============ 4. Facturacion por periodo ============ -->
+            <div class="rep-panel" id="panel-facturacion" hidden>
+                <h3>Facturación por período</h3>
+
+                <form class="crud-filtros" id="form-facturacion">
+                    <div class="crud-campo">
+                        <label for="fac-desde">Emitidas desde</label>
+                        <input type="date" id="fac-desde">
+                    </div>
+                    <div class="crud-campo">
+                        <label for="fac-hasta">Emitidas hasta</label>
+                        <input type="date" id="fac-hasta">
+                    </div>
+                    <div class="crud-campo">
+                        <label for="fac-estado">Estado</label>
+                        <select id="fac-estado"><option value="">Todos</option></select>
+                    </div>
+                    <button type="submit" class="crud-btn crud-btn-primario">Generar reporte</button>
+                    <button type="reset" class="crud-btn">Limpiar</button>
+                </form>
+
+                <p class="crud-mensaje" id="mensaje-facturacion" role="status" aria-live="polite" hidden></p>
+                <div class="rep-totales" id="totales-facturacion"></div>
+
+                <div class="contenedor-tabla">
+                    <table class="tabla-resultados" id="tabla-facturacion">
+                        <thead>
+                            <tr>
+                                <th>Factura</th><th>Propiedad</th><th>Cliente</th>
+                                <th>Emisión</th><th>Vencimiento</th><th>Estado</th>
+                                <th>Moneda</th><th class="rep-der">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ============ 5. Resumen por ciudad y tipo ============ -->
+            <div class="rep-panel" id="panel-resumen" hidden>
+                <h3>Resumen por ciudad y tipo</h3>
+
+                <form class="crud-filtros" id="form-resumen">
+                    <div class="crud-campo">
+                        <label for="res-ciudad">Ciudad</label>
+                        <select id="res-ciudad"><option value="">Todas</option></select>
+                    </div>
+                    <div class="crud-campo">
+                        <label for="res-tipo">Tipo de inmueble</label>
+                        <select id="res-tipo"><option value="">Todos</option></select>
+                    </div>
+                    <button type="submit" class="crud-btn crud-btn-primario">Generar reporte</button>
+                    <button type="reset" class="crud-btn">Limpiar</button>
+                </form>
+
+                <p class="crud-mensaje" id="mensaje-resumen" role="status" aria-live="polite" hidden></p>
+                <div class="rep-totales" id="totales-resumen"></div>
+
+                <div class="contenedor-tabla">
+                    <table class="tabla-resultados" id="tabla-resumen">
+                        <thead>
+                            <tr>
+                                <th>Ciudad</th><th>Tipo de inmueble</th>
+                                <th class="rep-der">Inmuebles</th>
+                                <th class="rep-der">Disponibles</th>
+                                <th class="rep-der">No disponibles</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-contenido">
+            <div class="footer-col">
+
+                <h3>InmoWeb</h3>
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+            </div>
+
+            <div class="footer-col">
+                <h4>Explorar</h4>
+                <ul>
+                    <li><a href="Indice.html#propiedades">Propiedades destacadas</a></li>
+                    <li><a href="Inmobiliarias.html">Inmobiliarias asociadas</a></li>
+                    <li><a href="Operaciones.html">Tipos de operaciones</a></li>
+                    <li><a href="Reportes.html">Reportes del mercado</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <p>📍 UTN FRC</p>
+                <p>📞 +54 351 123-4567</p>
+                <p>✉️ contacto@inmoweb.com</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 InmoWeb - Todos los derechos reservados.</p>
+            <div class="legales">
+                <a href="#">Términos y condiciones</a> |
+                <a href="#">Política de privacidad</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/reportes.js"></script>
+</body>
+</html>

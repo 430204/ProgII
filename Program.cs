@@ -23,7 +23,7 @@ builder.Services.AddSwaggerGen(options =>
     {
         Title = "InmoWeb - Inmobiliaria Córdoba",
         Version = "v1",
-        Description = "API del Trabajo Práctico Integrador de Bases de Datos I - UTN FRC"
+        Description = "API del Trabajo Práctico Integrador de Programacion II - UTN FRC"
     });
 
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
@@ -115,7 +115,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 // La raíz del sitio abre directamente el front, no Swagger.
-app.MapGet("/", () => Results.Redirect("/frontend/Indice.html"))
-   .ExcludeFromDescription();
+app.MapGet("/", () => Results.Redirect("/frontend/Login.html"))
+    .ExcludeFromDescription();
 
 app.Run();

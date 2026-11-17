@@ -58,7 +58,6 @@ namespace InmoWeb.Controllers
             }
         }
 
-        // Detalle publico de una publicacion activa (lo usa Detalle.html)
         [HttpGet("publicaciones/{id:int}")]
         public async Task<ActionResult<PublicacionDetalleDto>> GetPublicacionDetalle(int id)
         {

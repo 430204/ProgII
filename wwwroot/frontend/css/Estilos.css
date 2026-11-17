@@ -1543,7 +1543,6 @@ section.dolar-card {
             }
 }
 
-/* ===== Tarjetas con foto y pagina de detalle ===== */
 .boton-detalle {
     display: block;
     text-align: center;
@@ -1612,7 +1611,6 @@ section.dolar-card {
 
 .detalle-propiedad h4 { margin: 18px 0 8px; font-size: 20px; color: #17324d; }
 
-/* Tabla de resultados plegable en la pagina de propiedades */
 .resultados-tabla { margin-top: 30px; }
 
     .resultados-tabla > summary {
@@ -1628,7 +1626,6 @@ section.dolar-card {
 
     .resultados-tabla[open] > summary { margin-bottom: 16px; }
 
-/* ================= Avisos en pantalla (reemplazan a alert) ================= */
 .aviso {
     margin: 12px 0 0;
     font-size: 15px;

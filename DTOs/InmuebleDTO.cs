@@ -102,7 +102,6 @@ public class CatalogosInmuebleDto
     public List<OpcionDto> Inmobiliarias { get; set; } = new();
 }
 
-// Detalle publico de una publicacion activa (pantalla Detalle.html)
 public class PublicacionDetalleDto
 {
     public int IdPublicacion { get; set; }

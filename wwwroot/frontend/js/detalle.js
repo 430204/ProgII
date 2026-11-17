@@ -1,5 +1,4 @@
-﻿// Detalle de una publicacion activa. Datos: GET /Inmueble/publicaciones/{id}
-const parametros = new URLSearchParams(window.location.search);
+﻿const parametros = new URLSearchParams(window.location.search);
 const idPublicacion = Number(parametros.get("id"));
 
 function texto(id, valor) {

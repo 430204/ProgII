@@ -93,7 +93,6 @@ namespace InmoWeb.Repositories.Inmueble
 
         public async Task<PublicacionDetalleDto?> GetPublicacionDetalleAsync(int idPublicacion)
         {
-            // Solo publicaciones activas: es la informacion publica que ve el cliente
             return await db.Publicacions
                 .AsNoTracking()
                 .Where(p => p.IdPublicacion == idPublicacion && p.Activa)

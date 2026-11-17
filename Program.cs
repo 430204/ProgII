@@ -57,7 +57,7 @@ builder.Services.AddDbContext<InmobiliariaDBContext>(options => options.UseSqlSe
 builder.Services.AddScoped<IInmuebleRepository, InmuebleRepository>();
 builder.Services.AddScoped<IInmuebleServices, InmuebleServices>();
 
-// Reportes del Trabajo Practico Integrador
+// TPI reportes
 builder.Services.AddScoped<
     InmoWeb.Repositories.Reporte.Interfaz.IReporteRepository,
     InmoWeb.Repositories.Reporte.ReporteRepository>();
@@ -65,7 +65,7 @@ builder.Services.AddScoped<
     InmoWeb.Services.Reportes.Interfaces.IReporteServices,
     InmoWeb.Services.Reportes.ReporteServices>();
 
-// Operaciones resueltas con los procedimientos almacenados
+// SP
 builder.Services.AddScoped<
     InmoWeb.Repositories.Operacion.Interfaz.IOperacionRepository,
     InmoWeb.Repositories.Operacion.OperacionRepository>();
@@ -73,8 +73,6 @@ builder.Services.AddScoped<
     InmoWeb.Services.Operaciones.Interfaces.IOperacionServices,
     InmoWeb.Services.Operaciones.OperacionServices>();
 
-// Repositorio de Personas: lo usa AuthController para validar el login.
-// Sin este registro, cualquier POST a /api/Auth falla con error 500 de inyección de dependencias.
 builder.Services.AddScoped<
     InmoWeb.Repositories.Persona.Interfaz.IPersonaRepository,
     InmoWeb.Repositories.Persona.PersonaRepository>();
@@ -97,7 +95,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -114,7 +111,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-// La raíz del sitio abre directamente el front, no Swagger.
+// La raíz del sitio abre directamente el front
 app.MapGet("/", () => Results.Redirect("/frontend/Inicio.html"))
     .ExcludeFromDescription();
 

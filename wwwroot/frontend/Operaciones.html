@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operaciones - InmoWeb</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%2317324d'/%3E%3Cpath d='M5 10.5l7-5.5 7 5.5v8.5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 19v-8.5z' fill='none' stroke='%23e9bc70' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpolyline points='9.5 20.5 9.5 13 14.5 13 14.5 20.5' fill='none' stroke='%23e9bc70' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="css/Estilos.css">
+    <script src="js/auth.js"></script>
+</head>
+<body>
+
+    <header>
+        <a href="Indice.html" class="logo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <h1>InmoWeb</h1>
+        </a>
+
+        <nav>
+            <a href="Inicio.html">Inicio</a>
+            <a href="Indice.html#propiedades">Propiedades</a>
+            <a href="Gestion.html">Gestión</a>
+            <a href="Inmobiliarias.html">Inmobiliarias</a>
+            <a href="Operaciones.html">Operaciones</a>
+            <a href="Reportes.html">Reportes</a>
+            <a href="Contacto.html">Contacto</a>
+            <a href="SobreNosotros.html">Sobre Nosotros</a>
+            <a href="#" id="btnCerrarSesion">Cerrar sesión</a>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Operaciones</h2>
+            <!-- ============ DOLAR ============ -->
+            <section class="dolar-card">
+                <div class="dolar-header">
+                    <div>
+                        <h2>Dólar Blue</h2>
+                        <span class="dolar-subtitle">Cotización actual</span>
+                    </div>
+
+                    <span class="dolar-badge">USD</span>
+                </div>
+
+                <div class="dolar-values">
+                    <div class="dolar-item">
+                        <span>Compra</span>
+                        <strong id="dolar-compra">--</strong>
+                    </div>
+
+                    <div class="dolar-item">
+                        <span>Venta</span>
+                        <strong id="dolar-venta">--</strong>
+                    </div>
+                </div>
+
+                <div class="dolar-footer">
+                    <span id="dolar-estado">Consultando cotización...</span>
+                    <span id="dolar-fecha"></span>
+                </div>
+            </section>
+
+            <div class="op-grilla">
+
+                <!-- ============ 1. Publicar ============ -->
+                <article class="op-tarjeta">
+                    <h3>1. Publicar una propiedad</h3>
+
+                    <form id="form-publicar">
+                        <div class="crud-campo">
+                            <label for="pub-inmueble">Propiedad</label>
+                            <select id="pub-inmueble" required></select>
+                        </div>
+                        <div class="op-fila">
+                            <div class="crud-campo">
+                                <label for="pub-operacion-tipo">Operación</label>
+                                <select id="pub-operacion-tipo" required></select>
+                            </div>
+                            <div class="crud-campo">
+                                <label for="pub-moneda-nueva">Moneda</label>
+                                <select id="pub-moneda-nueva" required></select>
+                            </div>
+                        </div>
+                        <div class="crud-campo">
+                            <label for="pub-precio">Precio</label>
+                            <input type="number" id="pub-precio" min="0.01" step="0.01" required>
+                        </div>
+                        <button type="submit" class="crud-btn crud-btn-primario">Publicar</button>
+                    </form>
+
+                    <div class="op-resultado" id="resultado-publicar" hidden></div>
+                </article>
+
+                <!-- ============ 2. Concretar ============ -->
+                <article class="op-tarjeta op-destacada">
+                    <h3>2. Concretar la operación</h3>
+
+                    <form id="form-concretar">
+                        <div class="crud-campo">
+                            <label for="con-publicacion">Publicación activa</label>
+                            <select id="con-publicacion" required></select>
+                            <small id="con-detalle" class="crud-ayuda"></small>
+                        </div>
+                        <div class="op-fila">
+                            <div class="crud-campo">
+                                <label for="con-cliente">Cliente</label>
+                                <select id="con-cliente" required></select>
+                            </div>
+                            <div class="crud-campo">
+                                <label for="con-agente">Agente</label>
+                                <select id="con-agente" required></select>
+                            </div>
+                        </div>
+                        <div class="op-fila">
+                            <div class="crud-campo">
+                                <label for="con-inicio">Fecha de inicio</label>
+                                <input type="date" id="con-inicio" required>
+                            </div>
+                            <div class="crud-campo">
+                                <label for="con-fin">Fecha de fin</label>
+                                <input type="date" id="con-fin">
+                                <small class="crud-ayuda">Dejala vacía si es una venta.</small>
+                            </div>
+                        </div>
+                        <div class="op-fila">
+                            <div class="crud-campo">
+                                <label for="con-monto">Monto acordado</label>
+                                <input type="number" id="con-monto" min="0.01" step="0.01" required>
+                            </div>
+                            <div class="crud-campo">
+                                <label for="con-comision">Comisión (%)</label>
+                                <input type="number" id="con-comision" min="0" max="100" step="0.01" value="3" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="crud-btn crud-btn-primario">Concretar operación</button>
+                    </form>
+
+                    <div class="op-resultado" id="resultado-concretar" hidden></div>
+                </article>
+
+                <!-- ============ 3. Facturar ============ -->
+                <article class="op-tarjeta">
+                    <h3>3. Emitir factura</h3>
+
+                    <form id="form-facturar">
+                        <div class="crud-campo">
+                            <label for="fac-contrato">Contrato</label>
+                            <select id="fac-contrato" required></select>
+                            <small id="fac-detalle" class="crud-ayuda"></small>
+                        </div>
+                        <div class="op-fila">
+                            <div class="crud-campo">
+                                <label for="fac-numero">Número de factura</label>
+                                <input type="text" id="fac-numero" maxlength="30" required>
+                            </div>
+                            <div class="crud-campo">
+                                <label for="fac-vencimiento">Vencimiento</label>
+                                <input type="date" id="fac-vencimiento">
+                            </div>
+                        </div>
+                        <div class="crud-campo">
+                            <label for="fac-concepto">Concepto</label>
+                            <input type="text" id="fac-concepto" maxlength="200" required>
+                        </div>
+                        <div class="op-fila">
+                            <div class="crud-campo">
+                                <label for="fac-cantidad">Cantidad</label>
+                                <input type="number" id="fac-cantidad" min="1" step="1" value="1" required>
+                            </div>
+                            <div class="crud-campo">
+                                <label for="fac-precio">Precio unitario</label>
+                                <input type="number" id="fac-precio" min="0" step="0.01" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="crud-btn crud-btn-primario">Emitir factura</button>
+                    </form>
+
+                    <div class="op-resultado" id="resultado-facturar" hidden></div>
+                </article>
+
+                <!-- ============ 4. Cambiar estado ============ -->
+                <article class="op-tarjeta">
+                    <h3>4. Cambiar estado de un inmueble</h3>
+
+                    <form id="form-estado">
+                        <div class="crud-campo">
+                            <label for="est-inmueble">Inmueble</label>
+                            <select id="est-inmueble" required></select>
+                        </div>
+                        <div class="crud-campo">
+                            <label for="est-estado">Nuevo estado</label>
+                            <select id="est-estado" required></select>
+                        </div>
+                        <button type="submit" class="crud-btn crud-btn-primario">Cambiar estado</button>
+                    </form>
+
+                    <div class="op-resultado" id="resultado-estado" hidden></div>
+                </article>
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-contenido">
+            <div class="footer-col">
+
+                <h3>InmoWeb</h3>
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+            </div>
+
+            <div class="footer-col">
+                <h4>Explorar</h4>
+                <ul>
+                    <li><a href="Indice.html#propiedades">Propiedades destacadas</a></li>
+                    <li><a href="Inmobiliarias.html">Inmobiliarias asociadas</a></li>
+                    <li><a href="Operaciones.html">Tipos de operaciones</a></li>
+                    <li><a href="Reportes.html">Reportes del mercado</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <p>📍 UTN FRC</p>
+                <p>📞 +54 351 123-4567</p>
+                <p>✉️ contacto@inmoweb.com</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 InmoWeb - Todos los derechos reservados.</p>
+            <div class="legales">
+                <a href="#">Términos y condiciones</a> |
+                <a href="#">Política de privacidad</a>
+            </div>
+        </div>
+    </footer>
+    <script src="js/logout.js"></script>
+    <script src="js/dolar.js"></script>
+    <script src="js/operaciones.js"></script>
+</body>
+</html>

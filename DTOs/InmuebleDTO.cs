@@ -1,8 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace InmoWeb.DTOs;
-
-// Base con las propiedades y validaciones comunes a POST y PUT
 public abstract class InmuebleBaseDto
 {
     [Required(ErrorMessage = "El código es obligatorio.")]
@@ -13,7 +11,7 @@ public abstract class InmuebleBaseDto
     [StringLength(150, ErrorMessage = "El título no puede superar los 150 caracteres.")]
     public string Titulo { get; set; } = string.Empty;
 
-    [StringLength(2000, ErrorMessage = "La descripción no puede superar los 2000 caracteres.")]
+    [StringLength(500, ErrorMessage = "La descripción no puede superar los 500 caracteres.")]
     public string? Descripcion { get; set; }
 
     [Range(0.01, double.MaxValue, ErrorMessage = "La superficie total debe ser mayor a 0.")]
@@ -45,18 +43,14 @@ public abstract class InmuebleBaseDto
     [Range(1, int.MaxValue, ErrorMessage = "IdInmobiliaria es obligatorio.")]
     public int IdInmobiliaria { get; set; }
 }
-
-// DTO para POST
 public class InmuebleCreateDto : InmuebleBaseDto
 {
 }
 
-// DTO para PUT (reemplazo completo del recurso)
 public class InmuebleUpdateDto : InmuebleBaseDto
 {
 }
 
-// DTO de respuesta
 public class InmuebleResponseDto
 {
     public int IdInmueble { get; set; }
@@ -74,3 +68,62 @@ public class InmuebleResponseDto
     public int IdEstadoInmueble { get; set; }
     public int IdInmobiliaria { get; set; }
 }
+public class InmuebleListaDto
+{
+    public int IdInmueble { get; set; }
+    public string Codigo { get; set; } = string.Empty;
+    public string Titulo { get; set; } = string.Empty;
+    public string TipoInmueble { get; set; } = string.Empty;
+    public string Estado { get; set; } = string.Empty;
+    public string Calle { get; set; } = string.Empty;
+    public int Numero { get; set; }
+    public string Ciudad { get; set; } = string.Empty;
+    public decimal SuperficieTotal { get; set; }
+    public int? Dormitorios { get; set; }
+    public int? Banios { get; set; }
+}
+
+public class OpcionDto
+{
+    public int Id { get; set; }
+    public string Texto { get; set; } = string.Empty;
+}
+
+public class CatalogosInmuebleDto
+{
+    public List<OpcionDto> Tipos { get; set; } = new();
+
+    public List<OpcionDto> Estados { get; set; } = new();
+
+    public List<OpcionDto> EstadosInactivos { get; set; } = new();
+    public int EstadoDisponibleId { get; set; }
+
+    public List<OpcionDto> Direcciones { get; set; } = new();
+    public List<OpcionDto> Inmobiliarias { get; set; } = new();
+}
+
+public class PublicacionDetalleDto
+{
+    public int IdPublicacion { get; set; }
+    public string Codigo { get; set; } = string.Empty;
+    public string Titulo { get; set; } = string.Empty;
+    public string? Descripcion { get; set; }
+    public string Operacion { get; set; } = string.Empty;
+    public decimal Precio { get; set; }
+    public string Moneda { get; set; } = string.Empty;
+    public DateOnly FechaPublicacion { get; set; }
+    public string TipoInmueble { get; set; } = string.Empty;
+    public string Calle { get; set; } = string.Empty;
+    public int Numero { get; set; }
+    public string Ciudad { get; set; } = string.Empty;
+    public decimal SuperficieTotal { get; set; }
+    public decimal? SuperficieCubierta { get; set; }
+    public int? Ambientes { get; set; }
+    public int? Dormitorios { get; set; }
+    public int? Banios { get; set; }
+    public bool Cochera { get; set; }
+    public string Inmobiliaria { get; set; } = string.Empty;
+    public string? InmobiliariaTelefono { get; set; }
+    public string? InmobiliariaEmail { get; set; }
+}
+

@@ -3,15 +3,11 @@ using InmoWeb.Repositories.Inmueble;
 using InmoWeb.Repositories.Inmueble.Interfaz;
 using InmoWeb.Services.Inmuebles;
 using InmoWeb.Services.Inmuebles.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
-using System.Text.Json.Serialization;
-using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-
+using Microsoft.OpenApi.Models;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +19,13 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(options =>
 {
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "InmoWeb - Inmobiliaria Córdoba",
+        Version = "v1",
+        Description = "API del Trabajo Práctico Integrador de Programacion II - UTN FRC"
+    });
+
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
     {
         Name = "Authorization",
@@ -30,7 +33,7 @@ builder.Services.AddSwaggerGen(options =>
         Scheme = "bearer",
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Description = "Ingres� el JWT (sin el bearer)."
+        Description = "Ingresá el JWT (sin la palabra bearer)."
     });
 
     options.AddSecurityRequirement(new OpenApiSecurityRequirement()
@@ -54,10 +57,45 @@ builder.Services.AddDbContext<InmobiliariaDBContext>(options => options.UseSqlSe
 builder.Services.AddScoped<IInmuebleRepository, InmuebleRepository>();
 builder.Services.AddScoped<IInmuebleServices, InmuebleServices>();
 
+// TPI reportes
+builder.Services.AddScoped<
+    InmoWeb.Repositories.Reporte.Interfaz.IReporteRepository,
+    InmoWeb.Repositories.Reporte.ReporteRepository>();
+builder.Services.AddScoped<
+    InmoWeb.Services.Reportes.Interfaces.IReporteServices,
+    InmoWeb.Services.Reportes.ReporteServices>();
+
+// SP
+builder.Services.AddScoped<
+    InmoWeb.Repositories.Operacion.Interfaz.IOperacionRepository,
+    InmoWeb.Repositories.Operacion.OperacionRepository>();
+builder.Services.AddScoped<
+    InmoWeb.Services.Operaciones.Interfaces.IOperacionServices,
+    InmoWeb.Services.Operaciones.OperacionServices>();
+
+builder.Services.AddScoped<
+    InmoWeb.Repositories.Persona.Interfaz.IPersonaRepository,
+    InmoWeb.Repositories.Persona.PersonaRepository>();
+
+// Facturas y detalles de factura
+builder.Services.AddScoped<
+    InmoWeb.Repositories.Factura.Interfaz.IFacturaRepository,
+    InmoWeb.Repositories.Factura.FacturaRepository>();
+builder.Services.AddScoped<
+    InmoWeb.Services.Factura.Interfaces.IFacturaServices,
+    InmoWeb.Services.Factura.FacturaServices>();
+
+builder.Services.AddScoped<
+    InmoWeb.Repositories.DetalleFactura.Interfaz.IDetalleFacturaRepository,
+    InmoWeb.Repositories.DetalleFactura.DetalleFacturaRepository>();
+builder.Services.AddScoped<
+    InmoWeb.Services.DetalleFactura.Interfaces.IDetalleFacturaServices,
+    InmoWeb.Services.DetalleFactura.DetalleFacturaServices>();
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
-        options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+        options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
             ValidateAudience = true,
@@ -65,14 +103,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
             ValidIssuer = "JwtAuthPoc",
             ValidAudience = "JwtAuthPocUser",
-            IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("clave-super-secreta-para-poc-123456"))
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("clave-super-secreta-para-poc-123456"))
         };
     });
 
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -81,9 +118,16 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// La raíz del sitio abre directamente el front
+app.MapGet("/", () => Results.Redirect("/frontend/Inicio.html"))
+    .ExcludeFromDescription();
 
 app.Run();

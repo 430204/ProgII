@@ -2,9 +2,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace InmoWeb.DTOs;
 
-// ---------------------------------------------------------------------------
-// Opciones para los desplegables de la pantalla de operaciones
-// ---------------------------------------------------------------------------
 
 public class PublicacionOpcionDto
 {
@@ -32,10 +29,8 @@ public class ContratoOpcionDto
 
 public class CatalogosOperacionDto
 {
-    // Inmuebles disponibles que todavia no tienen publicacion activa
     public List<OpcionDto> Publicables { get; set; } = new();
 
-    // Publicaciones activas: son las que se pueden concretar
     public List<PublicacionOpcionDto> Publicaciones { get; set; } = new();
 
     public List<ContratoOpcionDto> Contratos { get; set; } = new();
@@ -46,10 +41,6 @@ public class CatalogosOperacionDto
     public List<string> Estados { get; set; } = new();
     public List<string> Monedas { get; set; } = new();
 }
-
-// ---------------------------------------------------------------------------
-// Entradas de cada operacion
-// ---------------------------------------------------------------------------
 
 public class PublicarDto
 {
@@ -118,10 +109,6 @@ public class CambiarEstadoDto
     public string Estado { get; set; } = string.Empty;
 }
 
-// ---------------------------------------------------------------------------
-// Respuesta: ademas de confirmar, informa que cambio en la base.
-// Sirve para mostrar en pantalla el efecto de los triggers.
-// ---------------------------------------------------------------------------
 
 public class ResultadoOperacionDto
 {
@@ -137,6 +124,5 @@ public class ResultadoOperacionDto
 
     public bool? SeguiaPublicado { get; set; }
 
-    // Lineas que explican que hizo la base de datos por su cuenta
     public List<string> EfectosEnLaBase { get; set; } = new();
 }

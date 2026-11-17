@@ -18,10 +18,6 @@ namespace InmoWeb.Controllers
             this.service = service;
         }
 
-        /// <summary>
-        /// Devuelve un inmueble por id. Requiere JWT: sirve para mostrar
-        /// la autenticacion funcionando desde Swagger.
-        /// </summary>
         [Authorize]
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
@@ -43,10 +39,6 @@ namespace InmoWeb.Controllers
             }
         }
 
-        /// <summary>
-        /// Catalogo publico: publicaciones activas con filtros de operacion,
-        /// moneda y precio maximo. Lee la vista vw_PublicacionesActivas.
-        /// </summary>
         [HttpGet("publicaciones-activas")]
         public async Task<IActionResult> GetPublicacionesActivas(
         [FromQuery] string? operacion = null,
@@ -66,12 +58,6 @@ namespace InmoWeb.Controllers
             }
         }
 
-        // ================= ABM de propiedades =================
-
-        /// <summary>
-        /// Listado de propiedades con filtro por texto (codigo, titulo o ciudad)
-        /// y por estado. Sin filtro de estado devuelve todas.
-        /// </summary>
         [HttpGet("propiedades")]
         public async Task<ActionResult<List<InmuebleListaDto>>> GetPropiedades(
             [FromQuery] string? texto = null,
@@ -94,9 +80,6 @@ namespace InmoWeb.Controllers
             return inmueble is null ? NotFound() : Ok(inmueble);
         }
 
-        /// <summary>
-        /// Alta de propiedad. Siempre nace con estado Disponible.
-        /// </summary>
         [HttpPost("propiedades")]
         public async Task<ActionResult<InmuebleResponseDto>> CreatePropiedad([FromBody] InmuebleCreateDto dto)
         {
@@ -113,10 +96,6 @@ namespace InmoWeb.Controllers
             }
         }
 
-        /// <summary>
-        /// Edicion de propiedad. Es la operacion que la pasa de Disponible a
-        /// Vendido, Alquilado o Reservado, y baja sus publicaciones activas.
-        /// </summary>
         [HttpPut("propiedades/{id:int}")]
         public async Task<ActionResult<InmuebleResponseDto>> UpdatePropiedad(int id, [FromBody] InmuebleUpdateDto dto)
         {
@@ -147,10 +126,6 @@ namespace InmoWeb.Controllers
             }
         }
 
-        /// <summary>
-        /// Datos para los desplegables del formulario: tipos, estados,
-        /// direcciones e inmobiliarias.
-        /// </summary>
         [HttpGet("catalogos")]
         public async Task<ActionResult<CatalogosInmuebleDto>> GetCatalogos()
         {

@@ -456,17 +456,32 @@ footer {
         }
 
 #formulario-busqueda {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-end;
-    gap: 12px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: end;
+    gap: 14px;
+    max-width: 960px;
 }
 
     #formulario-busqueda > div {
-        flex: 1 1 160px;
         min-width: 0;
         text-align: left;
     }
+
+    #formulario-busqueda button {
+        grid-column: 1 / -1;
+        justify-self: center;
+        width: 100%;
+        max-width: 320px;
+    }
+
+@media (max-width: 800px) {
+    #formulario-busqueda { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 520px) {
+    #formulario-busqueda { grid-template-columns: 1fr; }
+}
 
     #formulario-busqueda label {
         display: block;
@@ -477,15 +492,19 @@ footer {
     #formulario-busqueda input,
     #formulario-busqueda select {
         width: 100%;
+        height: 46px;
         box-sizing: border-box;
-        padding: 12px;
+        padding: 0 12px;
+        font-size: 16px;
+        font-family: inherit;
         border: 1px solid #ccc;
         border-radius: 5px;
         background-color: white;
     }
 
     #formulario-busqueda button {
-        min-height: 42px;
+        height: 46px;
+        padding: 0 25px;
     }
 
 .contenedor-tabla {
@@ -1523,3 +1542,99 @@ section.dolar-card {
                 font-size: 19px;
             }
 }
+
+/* ===== Tarjetas con foto y pagina de detalle ===== */
+.boton-detalle {
+    display: block;
+    text-align: center;
+    background-color: #17324d;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+    .boton-detalle:hover { background-color: #285578; }
+
+.enlace-volver {
+    display: inline-block;
+    margin-bottom: 14px;
+    color: #17324d;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+    .enlace-volver:hover { text-decoration: underline; }
+
+.subtitulo-detalle { color: #666; margin-bottom: 4px; }
+
+.galeria { margin: 20px 0; }
+
+    .galeria #imagen-detalle { margin: 0 0 10px; }
+
+.miniaturas { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    .miniaturas img {
+        width: 96px;
+        height: 70px;
+        object-fit: cover;
+        border-radius: 8px;
+        cursor: pointer;
+        border: 3px solid transparent;
+        opacity: 0.75;
+    }
+
+        .miniaturas img:hover { opacity: 1; }
+        .miniaturas img.activa { border-color: #e9bc70; opacity: 1; }
+
+.caracteristicas {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+}
+
+    .caracteristicas li {
+        background-color: #f5f6f8;
+        border-radius: 8px;
+        padding: 12px 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+        .caracteristicas li span { color: #666; font-size: 14px; }
+        .caracteristicas li strong { font-size: 18px; color: #17324d; }
+
+.detalle-propiedad h4 { margin: 18px 0 8px; font-size: 20px; color: #17324d; }
+
+/* Tabla de resultados plegable en la pagina de propiedades */
+.resultados-tabla { margin-top: 30px; }
+
+    .resultados-tabla > summary {
+        cursor: pointer;
+        font-weight: bold;
+        color: #17324d;
+        padding: 12px 16px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        list-style-position: inside;
+    }
+
+    .resultados-tabla[open] > summary { margin-bottom: 16px; }
+
+/* ================= Avisos en pantalla (reemplazan a alert) ================= */
+.aviso {
+    margin: 12px 0 0;
+    font-size: 15px;
+    font-weight: bold;
+    min-height: 1.2em;
+}
+.aviso.error { color: #b42318; }
+.aviso.exito { color: #16703c; }
+#formulario-busqueda .aviso { grid-column: 1 / -1; text-align: center; margin: 0; }

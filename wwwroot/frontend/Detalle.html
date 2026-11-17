@@ -22,6 +22,8 @@
 
         <nav>
             <a href="Inicio.html">Inicio</a>
+            <a href="Indice.html#propiedades">Propiedades</a>
+            <a href="Gestion.html">Gestión</a>
             <a href="Inmobiliarias.html">Inmobiliarias</a>
             <a href="Operaciones.html">Operaciones</a>
             <a href="Reportes.html">Reportes</a>
@@ -33,14 +35,30 @@
 
     <main>
         <section class="detalle-propiedad">
-            <h2 id="nombre-propiedad">Detalle de propiedad</h2>
+            <a href="Indice.html#propiedades" class="enlace-volver">&larr; Volver a propiedades</a>
 
-            <img id="imagen-detalle" src="" alt="Imagen de la propiedad">
+            <h2 id="nombre-propiedad">Cargando propiedad...</h2>
+            <p id="subtitulo-propiedad" class="subtitulo-detalle"></p>
+
+            <div class="galeria">
+                <img id="imagen-detalle" src="" alt="Imagen de la propiedad">
+                <div id="miniaturas" class="miniaturas"></div>
+            </div>
 
             <h3 id="precio-propiedad"></h3>
-
             <p id="ubicacion-propiedad"></p>
-            <p id="caracteristicas-propiedad"></p>
+
+            <ul id="caracteristicas-propiedad" class="caracteristicas"></ul>
+
+            <div id="bloque-descripcion" hidden>
+                <h4>Descripción</h4>
+                <p id="descripcion-propiedad"></p>
+            </div>
+
+            <div id="bloque-inmobiliaria" class="bloque-inmobiliaria" hidden>
+                <h4>Publicado por</h4>
+                <p id="inmobiliaria-propiedad"></p>
+            </div>
 
 
             <div class="formulario-contacto">
@@ -58,10 +76,11 @@
                               required></textarea>
 
                     <button type="submit">Enviar consulta</button>
+                    <p id="aviso-detalle" class="aviso" role="status"></p>
                 </form>
             </div>
 
-            <a href="Indice.html">Volver a propiedades</a>
+            <a href="Indice.html#propiedades" class="enlace-volver">&larr; Volver a propiedades</a>
         </section>
     </main>
 
@@ -103,6 +122,7 @@
         </div>
     </footer>
     <script src="js/logout.js"></script>
+    <script src="js/imagenes.js"></script>
     <script src="js/detalle.js"></script>
 </body>
 </html>

@@ -1,4 +1,5 @@
 ﻿
+const aviso = document.getElementById("aviso-contacto");
 const formulario = document.getElementById("formulario-contacto-general");
 
 formulario.addEventListener("submit", function(evento) {
@@ -9,11 +10,13 @@ formulario.addEventListener("submit", function(evento) {
     const consulta = document.getElementById("consulta").value.trim();
 
     if (nombre === "" || correo === "" || consulta === "") {
-        alert("Por favor, completá todos los campos.");
+        aviso.textContent = "Por favor, completá todos los campos.";
+        aviso.className = "aviso error";
         return;
     }
 
-    alert("Gracias " + nombre + ". Tu consulta fue validada correctamente.");
+    aviso.textContent = "Gracias " + nombre + ". Tu consulta fue validada correctamente.";
+    aviso.className = "aviso exito";
 
     formulario.reset();
 });

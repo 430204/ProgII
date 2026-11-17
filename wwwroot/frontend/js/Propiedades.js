@@ -1,5 +1,6 @@
 ﻿const formulario = document.getElementById("formulario-busqueda");
 const textoBusqueda = document.getElementById("texto-busqueda");
+const avisoBusqueda = document.getElementById("aviso-busqueda");
 const contenedor = document.getElementById("lista-inmuebles");
 
 let publicaciones = [];
@@ -10,9 +11,12 @@ async function cargarPublicaciones() {
     const precioMaximo = document.getElementById("precio-maximo").value;
 
     if (precioMaximo !== "" && moneda === "") {
-        alert("Seleccioná una moneda para filtrar por precio.");
+        avisoBusqueda.textContent = "Seleccioná una moneda para filtrar por precio.";
+        avisoBusqueda.className = "aviso error";
         return;
     }
+
+    avisoBusqueda.textContent = "";
 
     const parametros = new URLSearchParams();
 
@@ -81,6 +85,13 @@ function mostrarPublicaciones(lista) {
         const tarjeta = document.createElement("article");
         tarjeta.className = "tarjeta-propiedad";
 
+        const foto = document.createElement("img");
+        foto.className = "imagen-propiedad";
+        foto.src = window.imagenesPropiedad(publicacion.tipoInmueble, publicacion.idPublicacion)[0];
+        foto.alt = "Foto de " + publicacion.titulo;
+        foto.loading = "lazy";
+        tarjeta.appendChild(foto);
+
         const informacion = document.createElement("div");
         informacion.className = "informacion-propiedad";
 
@@ -105,6 +116,12 @@ function mostrarPublicaciones(lista) {
             publicacion.moneda + " "
             + publicacion.precio.toLocaleString("es-AR")
         );
+
+        const verDetalles = document.createElement("a");
+        verDetalles.className = "boton-detalle";
+        verDetalles.href = "Detalle.html?id=" + publicacion.idPublicacion;
+        verDetalles.textContent = "Ver detalles";
+        informacion.appendChild(verDetalles);
 
         tarjeta.appendChild(informacion);
         contenedor.appendChild(tarjeta);

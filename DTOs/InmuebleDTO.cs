@@ -101,3 +101,30 @@ public class CatalogosInmuebleDto
     public List<OpcionDto> Direcciones { get; set; } = new();
     public List<OpcionDto> Inmobiliarias { get; set; } = new();
 }
+
+// Detalle publico de una publicacion activa (pantalla Detalle.html)
+public class PublicacionDetalleDto
+{
+    public int IdPublicacion { get; set; }
+    public string Codigo { get; set; } = string.Empty;
+    public string Titulo { get; set; } = string.Empty;
+    public string? Descripcion { get; set; }
+    public string Operacion { get; set; } = string.Empty;
+    public decimal Precio { get; set; }
+    public string Moneda { get; set; } = string.Empty;
+    public DateOnly FechaPublicacion { get; set; }
+    public string TipoInmueble { get; set; } = string.Empty;
+    public string Calle { get; set; } = string.Empty;
+    public int Numero { get; set; }
+    public string Ciudad { get; set; } = string.Empty;
+    public decimal SuperficieTotal { get; set; }
+    public decimal? SuperficieCubierta { get; set; }
+    public int? Ambientes { get; set; }
+    public int? Dormitorios { get; set; }
+    public int? Banios { get; set; }
+    public bool Cochera { get; set; }
+    public string Inmobiliaria { get; set; } = string.Empty;
+    public string? InmobiliariaTelefono { get; set; }
+    public string? InmobiliariaEmail { get; set; }
+}
+

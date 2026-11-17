@@ -91,6 +91,39 @@ namespace InmoWeb.Repositories.Inmueble
         }
 
 
+        public async Task<PublicacionDetalleDto?> GetPublicacionDetalleAsync(int idPublicacion)
+        {
+            // Solo publicaciones activas: es la informacion publica que ve el cliente
+            return await db.Publicacions
+                .AsNoTracking()
+                .Where(p => p.IdPublicacion == idPublicacion && p.Activa)
+                .Select(p => new PublicacionDetalleDto
+                {
+                    IdPublicacion = p.IdPublicacion,
+                    Codigo = p.IdInmuebleNavigation.Codigo,
+                    Titulo = p.IdInmuebleNavigation.Titulo,
+                    Descripcion = p.IdInmuebleNavigation.Descripcion,
+                    Operacion = p.IdTipoOperacionNavigation.Descripcion,
+                    Precio = p.Precio,
+                    Moneda = p.Moneda,
+                    FechaPublicacion = p.FechaPublicacion,
+                    TipoInmueble = p.IdInmuebleNavigation.IdTipoInmuebleNavigation.Descripcion,
+                    Calle = p.IdInmuebleNavigation.IdDireccionNavigation.Calle,
+                    Numero = p.IdInmuebleNavigation.IdDireccionNavigation.Numero,
+                    Ciudad = p.IdInmuebleNavigation.IdDireccionNavigation.IdCiudadNavigation.Nombre,
+                    SuperficieTotal = p.IdInmuebleNavigation.SuperficieTotal,
+                    SuperficieCubierta = p.IdInmuebleNavigation.SuperficieCubierta,
+                    Ambientes = p.IdInmuebleNavigation.Ambientes,
+                    Dormitorios = p.IdInmuebleNavigation.Dormitorios,
+                    Banios = p.IdInmuebleNavigation.Banios,
+                    Cochera = p.IdInmuebleNavigation.Cochera,
+                    Inmobiliaria = p.IdInmuebleNavigation.IdInmobiliariaNavigation.Nombre,
+                    InmobiliariaTelefono = p.IdInmuebleNavigation.IdInmobiliariaNavigation.Telefono,
+                    InmobiliariaEmail = p.IdInmuebleNavigation.IdInmobiliariaNavigation.Email
+                })
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<List<InmuebleListaDto>> GetPropiedadesListadoAsync(string? texto, int? idEstado)
         {
             // El listado muestra TODAS las propiedades. Si no mostrara las Disponibles,

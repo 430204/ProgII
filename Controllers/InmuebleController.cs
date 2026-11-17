@@ -58,6 +58,14 @@ namespace InmoWeb.Controllers
             }
         }
 
+        // Detalle publico de una publicacion activa (lo usa Detalle.html)
+        [HttpGet("publicaciones/{id:int}")]
+        public async Task<ActionResult<PublicacionDetalleDto>> GetPublicacionDetalle(int id)
+        {
+            var detalle = await service.GetPublicacionDetalleAsync(id);
+            return detalle is null ? NotFound() : Ok(detalle);
+        }
+
         [HttpGet("propiedades")]
         public async Task<ActionResult<List<InmuebleListaDto>>> GetPropiedades(
             [FromQuery] string? texto = null,

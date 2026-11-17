@@ -20,9 +20,12 @@ namespace InmoWeb.Controllers
 
         private readonly IPersonaRepository _repository;
 
-        public AuthController(IPersonaRepository userRepository)
+        private readonly ILogger<AuthController> _logger;
+
+        public AuthController(IPersonaRepository userRepository, ILogger<AuthController> logger)
         {
             _repository = userRepository;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -65,8 +68,10 @@ namespace InmoWeb.Controllers
             }
             catch (Exception ex)
             {
+                // El detalle va al log del servidor; al usuario solo un mensaje genérico.
+                _logger.LogError(ex, "Error al iniciar sesión");
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                    new { mensaje = $"Error interno : {ex.Message}" });
+                    new { mensaje = "No se pudo iniciar sesión en este momento. Intentá de nuevo más tarde." });
             }
         }
     }

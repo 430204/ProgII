@@ -87,6 +87,11 @@ namespace InmoWeb.Services.Inmuebles
                 operacion, moneda, precioMaximo);
         }
 
+        public async Task<PublicacionDetalleDto?> GetPublicacionDetalleAsync(int idPublicacion)
+        {
+            return await repo.GetPublicacionDetalleAsync(idPublicacion);
+        }
+
         public async Task<InmuebleResponseDto?> UpdateAsync(int id, InmuebleUpdateDto dto)
         {
             var inmueble = await repo.GetInmuebleById(id);

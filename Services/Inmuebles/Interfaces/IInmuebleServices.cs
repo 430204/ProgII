@@ -23,6 +23,8 @@ namespace InmoWeb.Services.Inmuebles.Interfaces
         string? moneda,
         decimal? precioMaximo);
 
+        Task<PublicacionDetalleDto?> GetPublicacionDetalleAsync(int idPublicacion);
+
         // ---- ABM de propiedades ----
         // Alta: la propiedad nace Disponible.
         // Edicion: es la operacion que la pasa a Vendido, Alquilado o Reservado.

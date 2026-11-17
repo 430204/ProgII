@@ -39,13 +39,14 @@
         const tarjeta = document.createElement("article");
         tarjeta.className = "inmo-tarjeta";
 
+        // Encabezado
         const encabezado = document.createElement("div");
         encabezado.className = "inmo-encabezado";
         agregar(encabezado, "h3", inmobiliaria.nombre);
-        agregar(encabezado, "p", inmobiliaria.direccion + ", " + inmobiliaria.ciudad,
-                "inmo-ubicacion");
+        agregar(encabezado, "p", inmobiliaria.direccion + ", " + inmobiliaria.ciudad, "inmo-ubicacion");
         tarjeta.appendChild(encabezado);
 
+        // Contacto
         const contacto = document.createElement("ul");
         contacto.className = "inmo-contacto";
         if (inmobiliaria.cuit) agregar(contacto, "li", "CUIT " + inmobiliaria.cuit);
@@ -53,6 +54,7 @@
         if (inmobiliaria.email) agregar(contacto, "li", inmobiliaria.email);
         tarjeta.appendChild(contacto);
 
+        // Métricas
         const metricas = document.createElement("div");
         metricas.className = "inmo-metricas";
         metrica(metricas, inmobiliaria.totalPropiedades, "Propiedades");
@@ -63,28 +65,40 @@
         metrica(metricas, inmobiliaria.reservadas, "Reservadas", "inmo-reservadas");
         tarjeta.appendChild(metricas);
 
-        // Barra de composicion de la cartera
+        // ========== GRÁFICO CIRCULAR ==========
         const total = inmobiliaria.totalPropiedades || 0;
+
         if (total > 0) {
-            const barra = document.createElement("div");
-            barra.className = "inmo-barra";
-            barra.title = "Composición de la cartera";
+            const pDisponibles = Math.round((inmobiliaria.disponibles / total) * 100);
+            const pVendidas = Math.round((inmobiliaria.vendidas / total) * 100);
+            const pAlquiladas = Math.round((inmobiliaria.alquiladas / total) * 100);
+            const pReservadas = Math.round((inmobiliaria.reservadas / total) * 100);
 
-            [["disponibles", inmobiliaria.disponibles],
-             ["vendidas", inmobiliaria.vendidas],
-             ["alquiladas", inmobiliaria.alquiladas],
-             ["reservadas", inmobiliaria.reservadas]].forEach(function (par) {
-                if (par[1] > 0) {
-                    const tramo = document.createElement("span");
-                    tramo.className = "inmo-tramo inmo-tramo-" + par[0];
-                    tramo.style.width = (par[1] * 100 / total) + "%";
-                    barra.appendChild(tramo);
-                }
-            });
+            const donut = document.createElement("div");
+            donut.className = "inmo-donut";
+            donut.style.setProperty("--p-disponibles", pDisponibles);
+            donut.style.setProperty("--p-vendidas", pVendidas);
+            donut.style.setProperty("--p-alquiladas", pAlquiladas);
+            donut.style.setProperty("--p-reservadas", pReservadas);
 
-            tarjeta.appendChild(barra);
+            const centro = document.createElement("div");
+            centro.className = "inmo-donut-centro";
+
+            const totalSpan = document.createElement("span");
+            totalSpan.className = "inmo-donut-total";
+            totalSpan.textContent = numero(total);
+            centro.appendChild(totalSpan);
+
+            const labelSpan = document.createElement("span");
+            labelSpan.className = "inmo-donut-label";
+            labelSpan.textContent = "propiedades";
+            centro.appendChild(labelSpan);
+
+            donut.appendChild(centro);
+            tarjeta.appendChild(donut);
         }
 
+        // Botón
         const pie = document.createElement("a");
         pie.className = "crud-btn crud-btn-primario inmo-boton";
         pie.href = "Reportes.html";
